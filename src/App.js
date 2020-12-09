@@ -13,6 +13,8 @@ import MarketPage from "./pages/MarketPage";
 import Navbar from "./components/Navbar";
 import { Auth } from "aws-amplify";
 
+export const UserContext = React.createContext();
+
 function App() {
 	const [authState, setAuthState] = useState();
 	const [user, setUser] = useState();
@@ -33,19 +35,21 @@ function App() {
 	}
 
 	return authState === AuthState.SignedIn && user ? (
-		<BrowserRouter>
-			<Navbar user={user} handleSignOut={handleSignOut} />
-			<div className="app-container">
-				<Route exact path="/" component={HomePage} />
-				<Route path="/profile" component={ProfilePage} />
-				<Route
-					path="/markets/:marketId"
-					component={({ match }) => (
-						<MarketPage marketId={match.params.marketId} />
-					)}
-				/>
-			</div>
-		</BrowserRouter>
+		<UserContext.Provider value={{ user }}>
+			<BrowserRouter>
+				<Navbar user={user} handleSignOut={handleSignOut} />
+				<div className="app-container">
+					<Route exact path="/" component={HomePage} />
+					<Route path="/profile" component={ProfilePage} />
+					<Route
+						path="/markets/:marketId"
+						component={({ match }) => (
+							<MarketPage marketId={match.params.marketId} />
+						)}
+					/>
+				</div>
+			</BrowserRouter>
+		</UserContext.Provider>
 	) : (
 		<AmplifyAuthenticator />
 	);

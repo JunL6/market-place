@@ -12,3 +12,50 @@ amplify-authenticator {
 	--background-color: black !important;
 	--amplify-background-color: black;
 }
+
+/* Navbar.js */
+.nav-container {
+	display: flex;
+}
+
+@media (max-width: 520px) {
+	.nav-container {
+		justify-content: center;
+	}
+}
+
+@media (min-width: 520px) {
+	.nav-container {
+		justify-content: space-between;
+	}
+}
+
+.nav-items .el-menu-item:nth-child(1) {
+	cursor: default;
+}
+
+.app-name {
+	color: orange;
+	border: none !important;
+	font-size: 2em;
+	padding: 0 0.2em;
+}
+
+.nav-link {
+	text-decoration: none;
+}
+
+/* NewMarket.js */
+.market-header {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.market-title {
+	display: inline-block;
+}
+
+.market-add-button {
+	margin-left: 0.2em !important;
+}
