@@ -15,7 +15,7 @@ import { UserContext } from "../App";
 
 const TAGS = ["Food", "Clothing", "Eletronics", "Book", "Office"];
 
-export default function NewMarket() {
+export default function NewMarket(props) {
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const [marketName, setMarketName] = useState("");
 	const user = useContext(UserContext);
@@ -69,6 +69,10 @@ export default function NewMarket() {
 		setTagsSelected(selectedTag);
 	}
 
+	function handleSearchInputChange(input) {
+		props.setSearchTerm(input);
+	}
+
 	return (
 		<>
 			<div className="market-header">
@@ -82,10 +86,32 @@ export default function NewMarket() {
 				</Button>
 			</div>
 
+			<Form inline={true} className="market-search-bar">
+				<Form.Item>
+					<Input
+						type="text"
+						value={props.searchTerm}
+						onChange={handleSearchInputChange}
+						placeholder="search markets by name or tag"
+					/>
+				</Form.Item>
+				<Form.Item>
+					<Button
+						nativeType="submit"
+						type="primary"
+						onClick={props.handleSearchSubmit}
+						loading={props.isSearchLoading}
+					>
+						Search
+					</Button>
+				</Form.Item>
+			</Form>
+
 			<Dialog
 				title="Add new market"
 				visible={isDialogOpen}
 				onCancel={handleCloseDialog}
+				closeOnPressEscape={true}
 				top="30%"
 			>
 				<Dialog.Body>

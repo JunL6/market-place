@@ -1,13 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import MarketList from "../components/MarketList";
 import NewMarket from "../components/NewMarket";
+import { API, graphqlOperation } from "aws-amplify";
+import { searchMarkets } from "../graphql/queries";
 
 export default function HomePage() {
+	const [searchTerm, setSearchTerm] = useState("");
+	const [isSearchLoading, setIsSearchLoading] = useState(false);
+	const [searchResultList, setSearchResultList] = useState([]);
+	const [currentSearchTerm, setCurrentSearchTerm] = useState("");
+
+	async function handleSearchSubmit(event) {
+		event.preventDefault();
+		setIsSearchLoading(true);
+		try {
+			const searchResult = await API.graphql(
+				graphqlOperation(searchMarkets, {
+					filter: {
+						or: [
+							{ name: { match: searchTerm } },
+							{ tags: { match: searchTerm } },
+						],
+					},
+				})
+			);
+			console.log(searchResult.data.searchMarkets.items);
+			setSearchResultList(searchResult.data.searchMarkets.items);
+			setCurrentSearchTerm(searchTerm);
+			setSearchTerm("");
+			setIsSearchLoading(false);
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
 	return (
 		<div>
 			homepage
-			<NewMarket />
-			<MarketList />
+			<NewMarket
+				searchTerm={searchTerm}
+				setSearchTerm={setSearchTerm}
+				handleSearchSubmit={handleSearchSubmit}
+				isSearchLoading={isSearchLoading}
+			/>
+			<MarketList
+				searchResultList={searchResultList}
+				currentSearchTerm={currentSearchTerm}
+			/>
 		</div>
 	);
 }

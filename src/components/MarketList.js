@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { listMarkets } from "../graphql/queries";
 import { API, graphqlOperation } from "aws-amplify";
-import { Loading, Card, Tag, Notification } from "element-react";
+import { Loading, Card, Tag, Notification, Icon } from "element-react";
 import { SiMarketo } from "react-icons/si";
 import { Link } from "react-router-dom";
 import { onCreateMarket } from "../graphql/subscriptions";
@@ -12,8 +12,15 @@ function sortByCreatedTimeAsc(a, b) {
 	else return -1;
 }
 
-export default function MarketList() {
+const cardBodyStyle = {
+	display: "flex",
+	flexDirection: "row",
+	justifyContent: "space-between",
+};
+
+export default function MarketList(props) {
 	const [markets, setMarkets] = useState(null);
+	const [currentSearchTerm, setCurrentSearchTerm] = useState("");
 
 	useEffect(() => {
 		fetchMarkets();
@@ -54,23 +61,14 @@ export default function MarketList() {
 		}
 	}
 
-	return (
-		<div className="market-list">
-			<h2>
-				<SiMarketo /> Markets
-			</h2>
+	function renderMarketList(markets) {
+		return (
 			<Loading text="loading markets..." loading={markets === null}>
 				{markets && markets.length > 0 && (
 					<div>
 						{markets.map((market) => (
 							<div className="market-list-item" key={market.id}>
-								<Card
-									bodyStyle={{
-										display: "flex",
-										flexDirection: "row",
-										justifyContent: "space-between",
-									}}
-								>
+								<Card bodyStyle={cardBodyStyle}>
 									<div className="market-list-item-left">
 										<Link
 											to={`/markets/${market.id}`}
@@ -98,6 +96,27 @@ export default function MarketList() {
 					</div>
 				)}
 			</Loading>
+		);
+	}
+
+	return (
+		<div className="market-list">
+			{props.searchResultList.length > 0 ? (
+				<div>
+					<h2>
+						<Icon name="check" /> search results for{" "}
+						{`"${props.currentSearchTerm}"`}
+					</h2>
+					{renderMarketList(props.searchResultList)}
+				</div>
+			) : (
+				<>
+					<h2>
+						<SiMarketo /> Markets
+					</h2>
+					{renderMarketList(markets)}
+				</>
+			)}
 		</div>
 	);
 }

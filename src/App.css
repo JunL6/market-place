@@ -71,6 +71,14 @@ amplify-authenticator {
 	margin-left: 0.2em !important;
 }
 
+.market-search-bar {
+	text-align: center;
+}
+
+.market-search-bar input {
+	width: 240px;
+}
+
 /* MarketList.js */
 .market-list {
 	margin: 1em 4em;
