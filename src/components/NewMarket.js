@@ -20,13 +20,6 @@ export default function NewMarket(props) {
 	const [marketName, setMarketName] = useState("");
 	const user = useContext(UserContext);
 	const [tagsSelected, setTagsSelected] = useState([]);
-	/* try */
-	// const [username, setUsername] = useState("");
-
-	// useEffect(() => {
-	// 	setUsername(user.username);
-	// 	console.log(`user context value: ${user.username}`);
-	// }, [user]);
 
 	function handleCloseDialog() {
 		setIsDialogOpen(false);

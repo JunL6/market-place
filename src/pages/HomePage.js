@@ -10,6 +10,7 @@ export default function HomePage() {
 	const [searchResultList, setSearchResultList] = useState([]);
 	const [currentSearchTerm, setCurrentSearchTerm] = useState("");
 
+	/* graphql operation for searching market by name or tags */
 	async function handleSearchSubmit(event) {
 		event.preventDefault();
 		setIsSearchLoading(true);

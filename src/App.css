@@ -30,6 +30,12 @@ amplify-authenticator {
 	}
 }
 
+@media (max-width: 570px) {
+	.greeting {
+		display: none;
+	}
+}
+
 .nav-items .greeting {
 	color: #b7c4d3;
 	float: left;
