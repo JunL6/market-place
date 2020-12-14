@@ -25,6 +25,7 @@ export default function NewMarket(props) {
 		setIsDialogOpen(false);
 	}
 
+	/* graphql operation for creating market */
 	async function handleCreateMarket(event) {
 		event.preventDefault();
 		console.log(user.user.username);

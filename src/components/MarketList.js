@@ -26,6 +26,7 @@ export default function MarketList(props) {
 		fetchMarkets();
 	}, []);
 
+	/* graphql subscription for onCreateMarket */
 	useEffect(() => {
 		try {
 			const createMarketSubscription = API.graphql(
@@ -51,6 +52,7 @@ export default function MarketList(props) {
 		}
 	}, []);
 
+	/* graphql operatino for getting list of markets for the current user */
 	async function fetchMarkets() {
 		try {
 			const result = await API.graphql({ query: listMarkets });
@@ -107,7 +109,7 @@ export default function MarketList(props) {
 						<Icon name="check" /> search results for{" "}
 						{`"${props.currentSearchTerm}"`}
 					</h2>
-					{renderMarketList(props.searchResultList)}
+					{renderMarketList(props.searchResultList.sort(sortByCreatedTimeAsc))}
 				</div>
 			) : (
 				<>
