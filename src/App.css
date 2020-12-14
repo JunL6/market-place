@@ -13,6 +13,11 @@ amplify-authenticator {
 	--amplify-background-color: black;
 }
 
+/* App.js */
+.app-container {
+	padding: 1.6em 4em 1.6em 4em;
+}
+
 /* Navbar.js */
 .nav-container {
 	display: flex;
@@ -122,4 +127,22 @@ amplify-authenticator {
 
 .search-result-text {
 	padding: 0 12px;
+}
+
+/* MarketPage.js */
+.back-nav-link {
+	margin-bottom: 0.6em;
+}
+
+.market-name {
+	margin-bottom: 0.6em;
+}
+
+.market-name strong {
+	font-size: 1.4em;
+	margin-right: 0.2em;
+}
+
+.market-page-tabs {
+	margin-top: 0.6em;
 }

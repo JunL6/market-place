@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import { getMarket } from "../graphql/queries";
 import { Link } from "react-router-dom";
-import { Loading, Tabs, Icon } from "element-react";
+import { Loading, Tabs, Icon, Button } from "element-react";
 import NewProduct from "../components/NewProduct";
 // import { useParams } from "react-router-dom";
 
@@ -33,15 +33,22 @@ export default function MarketPage({ user, marketId }) {
 		<Loading fullscreen></Loading>
 	) : (
 		<>
-			{console.log(user.username === market.owner)}
-			<Link to="/">Back to Markets List</Link>
-			<div>
-				<strong>{market.name}</strong> <span>{market.owner}</span>
+			<div className="back-nav-link">
+				<Link to="/">
+					<Button>
+						<i className="el-icon-arrow-left" />
+						<span>Back to Markets List</span>
+					</Button>
+				</Link>
+			</div>
+			<div className="market-name">
+				<strong>{market.name}</strong> <span>{`By ${market.owner}`}</span>
 			</div>
 			<div>
 				<i className="el-icon-date" /> <span>{market.createdAt}</span>
 			</div>
 			<Tabs
+				className="market-page-tabs"
 				type="border-card"
 				value={market.owner === user.username ? "1" : "2"}
 			>

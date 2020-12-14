@@ -76,7 +76,7 @@ export default function NewMarket(props) {
 					onClick={() => setIsDialogOpen(true)}
 					className="market-add-button"
 				>
-					<AiFillPlusCircle size="3em" color="orange" />
+					<AiFillPlusCircle size="3em" color="#20A0FF" />
 				</Button>
 			</div>
 
