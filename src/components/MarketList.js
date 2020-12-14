@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { listMarkets } from "../graphql/queries";
 import { API, graphqlOperation } from "aws-amplify";
-import { Loading, Card, Tag, Notification, Icon } from "element-react";
+import { Loading, Card, Tag, Notification, Icon, Button } from "element-react";
 import { SiMarketo } from "react-icons/si";
 import { Link } from "react-router-dom";
 import { onCreateMarket } from "../graphql/subscriptions";
@@ -103,21 +103,24 @@ export default function MarketList(props) {
 
 	return (
 		<div className="market-list">
-			{props.searchResultList.length > 0 ? (
-				<div>
-					<h2>
-						<Icon name="check" /> search results for{" "}
-						{`"${props.currentSearchTerm}"`}
-					</h2>
-					{renderMarketList(props.searchResultList.sort(sortByCreatedTimeAsc))}
-				</div>
-			) : (
+			{console.log(props.currentSearchTerm)}
+			{props.shouldShowAllMarkets ? (
 				<>
 					<h2>
 						<SiMarketo /> Markets
 					</h2>
 					{renderMarketList(markets)}
 				</>
+			) : (
+				<div>
+					<h2>
+						<Button icon="arrow-left" onClick={props.showAllMarkets} />
+						<span className="search-result-text">
+							{`showing search results for "${props.currentSearchTerm}": ${props.searchResultList.length} matching`}
+						</span>
+					</h2>
+					{renderMarketList(props.searchResultList.sort(sortByCreatedTimeAsc))}
+				</div>
 			)}
 		</div>
 	);

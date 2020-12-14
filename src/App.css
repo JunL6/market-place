@@ -110,3 +110,7 @@ amplify-authenticator {
 .market-list-item-right span {
 	margin-left: 0.5em;
 }
+
+.search-result-text {
+	padding: 0 12px;
+}

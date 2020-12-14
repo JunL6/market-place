@@ -9,6 +9,7 @@ export default function HomePage() {
 	const [isSearchLoading, setIsSearchLoading] = useState(false);
 	const [searchResultList, setSearchResultList] = useState([]);
 	const [currentSearchTerm, setCurrentSearchTerm] = useState("");
+	const [shouldShowAllMarkets, setShouldShowAllMarkets] = useState(true);
 
 	/* graphql operation for searching market by name or tags */
 	async function handleSearchSubmit(event) {
@@ -29,10 +30,16 @@ export default function HomePage() {
 			setSearchResultList(searchResult.data.searchMarkets.items);
 			setCurrentSearchTerm(searchTerm);
 			setSearchTerm("");
+			setShouldShowAllMarkets(false);
 			setIsSearchLoading(false);
 		} catch (error) {
 			console.log(error);
 		}
+	}
+
+	function showAllMarkets() {
+		setShouldShowAllMarkets(true);
+		setSearchResultList([]);
 	}
 
 	return (
@@ -47,6 +54,8 @@ export default function HomePage() {
 			<MarketList
 				searchResultList={searchResultList}
 				currentSearchTerm={currentSearchTerm}
+				shouldShowAllMarkets={shouldShowAllMarkets}
+				showAllMarkets={showAllMarkets}
 			/>
 		</div>
 	);
