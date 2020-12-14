@@ -95,6 +95,7 @@ export default function NewMarket(props) {
 						type="primary"
 						onClick={props.handleSearchSubmit}
 						loading={props.isSearchLoading}
+						disabled={props.searchTerm === ""}
 					>
 						Search
 					</Button>

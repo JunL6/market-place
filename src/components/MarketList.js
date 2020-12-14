@@ -103,7 +103,6 @@ export default function MarketList(props) {
 
 	return (
 		<div className="market-list">
-			{console.log(props.currentSearchTerm)}
 			{props.shouldShowAllMarkets ? (
 				<>
 					<h2>
