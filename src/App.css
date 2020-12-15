@@ -14,8 +14,10 @@ amplify-authenticator {
 }
 
 /* App.js */
-.app-container {
-	padding: 1.6em 4em 1.6em 4em;
+@media (min-width: 768px) {
+	.app-container {
+		padding: 1.6em 4em 1.6em 4em;
+	}
 }
 
 /* Navbar.js */
@@ -158,4 +160,12 @@ amplify-authenticator {
 	max-width: 600px;
 	min-width: 520px;
 	text-align: center;
+}
+
+.photo-picker button {
+	display: none;
+}
+
+.new-product-form .photo-picker .header-hint {
+	display: none;
 }
