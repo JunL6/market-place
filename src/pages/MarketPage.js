@@ -61,6 +61,7 @@ export default function MarketPage({ user, marketId }) {
 						</span>
 					}
 					name="1"
+					className="market-page-new-product"
 				>
 					<NewProduct />
 				</Tabs.Pane>

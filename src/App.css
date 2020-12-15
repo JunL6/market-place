@@ -146,3 +146,16 @@ amplify-authenticator {
 .market-page-tabs {
 	margin-top: 0.6em;
 }
+
+.market-page-new-product {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+/* NewProduct.js */
+.new-product-form {
+	max-width: 600px;
+	min-width: 520px;
+	text-align: center;
+}
