@@ -13,7 +13,7 @@ import ProfilePage from "./pages/ProfilePage";
 import MarketPage from "./pages/MarketPage";
 import Navbar from "./components/Navbar";
 import { Auth } from "aws-amplify";
-/* try */
+/* try: worked. CSS for components in "aws-amplify-react" */
 import "@aws-amplify/ui/dist/style.css";
 
 export const UserContext = React.createContext();
