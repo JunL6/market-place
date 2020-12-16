@@ -1,4 +1,4 @@
-:root {
+/* :root {
 	--form-color: cyan !important;
 	--amplify-background-color: #f7faff;
 	background-color: aliceblue;
@@ -11,7 +11,7 @@ amplify-authenticator {
 :host {
 	--background-color: black !important;
 	--amplify-background-color: black;
-}
+} */
 
 /* App.js */
 @media (min-width: 768px) {
@@ -160,12 +160,4 @@ amplify-authenticator {
 	max-width: 600px;
 	min-width: 520px;
 	text-align: center;
-}
-
-.photo-picker button {
-	display: none;
-}
-
-.new-product-form .photo-picker .header-hint {
-	display: none;
 }

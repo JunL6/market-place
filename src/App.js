@@ -4,6 +4,7 @@ import {
 	AmplifyGreetings,
 	AmplifyAuthenticator,
 } from "@aws-amplify/ui-react";
+import { Authenticator, Greetings } from "aws-amplify-react";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 import { BrowserRouter, Route } from "react-router-dom";
 import "./App.css";
@@ -12,6 +13,8 @@ import ProfilePage from "./pages/ProfilePage";
 import MarketPage from "./pages/MarketPage";
 import Navbar from "./components/Navbar";
 import { Auth } from "aws-amplify";
+/* try */
+import "@aws-amplify/ui/dist/style.css";
 
 export const UserContext = React.createContext();
 
@@ -52,6 +55,7 @@ function App() {
 		</UserContext.Provider>
 	) : (
 		<AmplifyAuthenticator />
+		// <Authenticator />
 	);
 }
 
