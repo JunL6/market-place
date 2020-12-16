@@ -39,7 +39,7 @@ export default function MarketList(props) {
 						return [...prevMarkets, newMarket].sort(sortByCreatedTimeAsc);
 					});
 					Notification.success({
-						title: "Success",
+						title: "Success!",
 						message: "Added new market",
 					});
 				},
