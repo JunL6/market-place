@@ -96,6 +96,7 @@ export default function MarketPage({ user, marketId }) {
 					<NewProduct marketId={marketId} />
 				</Tabs.Pane>
 				<Tabs.Pane
+					className="market-page-prodcut-list"
 					label={
 						<span>
 							<Icon name="menu" />

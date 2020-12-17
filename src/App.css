@@ -155,6 +155,10 @@ amplify-authenticator {
 	flex-direction: column;
 }
 
+.market-page-prodcut-list {
+	padding: 1em 0;
+}
+
 .product-list {
 	display: flex;
 	flex-direction: row;
