@@ -173,3 +173,23 @@ amplify-authenticator {
 	min-width: 520px;
 	text-align: center;
 }
+
+/* Product.js */
+.product-card strong {
+	display: inline-block;
+	margin: 0.4em 0.8em;
+}
+
+.product-card .shipped {
+	margin: 0 0.8em;
+}
+
+.product-card .price {
+	align-self: flex-end;
+	margin: 0.4em 0.8em;
+}
+
+.product-card .pay-button {
+	align-self: flex-end;
+	margin: 0 0.8em 0.8em 0.8em;
+}
