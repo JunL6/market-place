@@ -155,6 +155,18 @@ amplify-authenticator {
 	flex-direction: column;
 }
 
+.product-list {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	/* display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	grid-auto-flow: row dense;
+	justify-items: center;
+	grid-gap: 0.2em; */
+}
+
 /* NewProduct.js */
 .new-product-form {
 	max-width: 600px;
