@@ -197,3 +197,11 @@ amplify-authenticator {
 	align-self: flex-end;
 	margin: 0 0.8em 0.8em 0.8em;
 }
+
+.product-card .owner-buttons {
+	text-align: right;
+	margin: 0 0.8em 0.8em 0;
+}
+.product-card .dialog-buttons {
+	text-align: center;
+}
