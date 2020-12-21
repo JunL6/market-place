@@ -43,7 +43,7 @@ export default function Product({ product }) {
 		event.preventDefault();
 		setIsUpdating(true);
 		try {
-			const updateResult = API.graphql(
+			const updateResult = await API.graphql(
 				graphqlOperation(updateProduct, {
 					input: {
 						id: product.id,
