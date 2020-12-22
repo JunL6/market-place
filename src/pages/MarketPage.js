@@ -57,6 +57,21 @@ export default function MarketPage({ user, marketId }) {
 		fetchMarket();
 	}, []);
 
+	async function fetchMarket() {
+		try {
+			const fetchResult = await API.graphql(
+				graphqlOperation(getMarket, {
+					id: marketId,
+				})
+			);
+			console.log(fetchResult);
+			setMarket(fetchResult.data.getMarket);
+			setIsLoading(false);
+		} catch (err) {
+			console.error(err);
+		}
+	}
+
 	/* subscription to product create, update and delete */
 	useEffect(() => {
 		/* subscription to product create */
@@ -88,7 +103,6 @@ export default function MarketPage({ user, marketId }) {
 		const onUpdateProductListener = API.graphql(
 			graphqlOperation(onUpdateProduct, {
 				owner: user.attributes.sub,
-				// owner: "test1",
 			})
 		).subscribe({
 			next: (productData) => {
@@ -114,7 +128,6 @@ export default function MarketPage({ user, marketId }) {
 		const onDeleteProductListener = API.graphql(
 			graphqlOperation(onDeleteProduct, {
 				owner: user.attributes.sub,
-				// owner: "test1",
 			})
 		).subscribe({
 			next: (productData) => {
@@ -136,6 +149,7 @@ export default function MarketPage({ user, marketId }) {
 		return function cleanup() {
 			onCreateProductListener.unsubscribe();
 			onUpdateProductListener.unsubscribe();
+			onDeleteProductListener.unsubscribe();
 		};
 	}, [market]);
 
@@ -153,21 +167,6 @@ export default function MarketPage({ user, marketId }) {
 	// 		onMarketUpdateListener.unsubscribe();
 	// 	};
 	// }, []);
-
-	async function fetchMarket() {
-		try {
-			const fetchResult = await API.graphql(
-				graphqlOperation(getMarket, {
-					id: marketId,
-				})
-			);
-			console.log(fetchResult);
-			setMarket(fetchResult.data.getMarket);
-			setIsLoading(false);
-		} catch (err) {
-			console.error(err);
-		}
-	}
 
 	return isLoading ? (
 		<Loading fullscreen></Loading>

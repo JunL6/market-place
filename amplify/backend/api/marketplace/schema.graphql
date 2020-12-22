@@ -14,7 +14,15 @@ type Market @model @searchable {
 
 type Product
 	@model
-	@auth(rules: [{ allow: owner, identityField: "sub" }])
+	@auth(
+		rules: [
+			{
+				allow: owner
+				identityField: "sub"
+				operations: [create, delete, update]
+			}
+		]
+	)
 	@key(name: "MarketProducts", fields: ["marketID"]) {
 	id: ID!
 	description: String!

@@ -142,8 +142,8 @@ export default function Product({ product }) {
 				<div className="shipped">
 					<i className="el-icon-message" />
 					{product.shipped ? "Shipped" : "Emailed"}
+					<div className="price">${convertCentsToDollars(product.price)}</div>
 				</div>
-				<div className="price">${convertCentsToDollars(product.price)}</div>
 				{isOwner ? (
 					<div className="owner-buttons">
 						<Button
@@ -155,7 +155,7 @@ export default function Product({ product }) {
 					</div>
 				) : (
 					<div className="pay-button">
-						<PayButton />
+						<PayButton product={product} user={user} />
 					</div>
 				)}
 			</Card>

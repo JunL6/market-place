@@ -183,23 +183,28 @@ amplify-authenticator {
 	margin-top: 2em;
 }
 
+.product-card .el-card {
+	border-radius: 12px;
+}
+
 .product-card strong {
 	display: inline-block;
 	margin: 0.4em 0.8em;
 }
 
 .product-card .shipped {
-	margin: 0 0.8em;
+	margin: 0 0.8em 0.4em 0.8em;
+	display: flex;
+	flex-direction: row;
+}
+
+.product-card .shipped i {
+	margin-right: 0.2em;
 }
 
 .product-card .price {
-	align-self: flex-end;
-	margin: 0.4em 0.8em;
-}
-
-.product-card .pay-button {
-	align-self: flex-end;
-	margin: 0 0.8em 0.8em 0.8em;
+	width: 100%;
+	text-align: end;
 }
 
 .product-card .owner-buttons {
@@ -208,4 +213,23 @@ amplify-authenticator {
 }
 .product-card .dialog-buttons {
 	text-align: center;
+}
+
+.product-card .pay-button {
+	width: 100%;
+}
+
+.product-card .pay-button button {
+	background: none !important;
+	width: 100% !important;
+	height: 3.6em;
+	background-color: orange !important;
+	border-radius: 0 !important;
+}
+
+.product-card .pay-button span {
+	background: none !important;
+	background-color: none !important;
+	box-shadow: none !important;
+	text-shadow: none !important;
 }
