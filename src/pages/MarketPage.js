@@ -42,6 +42,8 @@ const getMarket = /* GraphQL */ `
 	}
 `;
 
+// export const IsLoadingContext = React.createContext();
+
 export default function MarketPage({ user, marketId }) {
 	const [market, setMarket] = useState();
 	const [isLoading, setIsLoading] = useState(true);
@@ -172,6 +174,7 @@ export default function MarketPage({ user, marketId }) {
 		<Loading fullscreen></Loading>
 	) : (
 		<>
+			{/* <IsLoadingContext.Provider value={{ setIsLoading }}> */}
 			<div className="back-nav-link">
 				<Link to="/">
 					<Button>
@@ -223,6 +226,7 @@ export default function MarketPage({ user, marketId }) {
 					</div>
 				</Tabs.Pane>
 			</Tabs>
+			{/* </IsLoadingContext.Provider> */}
 		</>
 	);
 }
