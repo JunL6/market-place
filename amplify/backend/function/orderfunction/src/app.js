@@ -11,13 +11,11 @@ See the License for the specific language governing permissions and limitations 
 	REGION
 Amplify Params - DO NOT EDIT */
 
-require("dotenv").config();
-const stripe = requrie("stripe")(process.env.STRIPE_SECRET_KEY);
-const cors = require("cors");
-
 var express = require("express");
 var bodyParser = require("body-parser");
 var awsServerlessExpressMiddleware = require("aws-serverless-express/middleware");
+require("dotenv").config();
+var stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 // declare a new express app
 var app = express();
@@ -27,7 +25,6 @@ app.use(awsServerlessExpressMiddleware.eventContext());
 // Enable CORS for all methods
 app.use(function (req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Credentials", true);
 	res.header(
 		"Access-Control-Allow-Headers",
 		"Origin, X-Requested-With, Content-Type, Accept"
@@ -35,15 +32,16 @@ app.use(function (req, res, next) {
 	next();
 });
 
-app.use(cors());
-
 /****************************
  * Example post method *
  ****************************/
 
-app.post("/charge", cors(), async function (req, res) {
+app.post("/charge", async function (req, res) {
+	// Add your code here
+	// res.json({ success: "post call succeed!", url: req.url, body: req.body });
 	const { token } = req.body;
 	const { currency, amount, description } = req.body.charge;
+
 	try {
 		const charge = await stripe.charges.create({
 			source: token.id,
@@ -53,7 +51,9 @@ app.post("/charge", cors(), async function (req, res) {
 		});
 		res.json(charge);
 	} catch (err) {
-		res.status(500).json({ error: err });
+		res
+			.status(500)
+			.json({ error: err, message: "failed to process stripe payment" });
 	}
 });
 

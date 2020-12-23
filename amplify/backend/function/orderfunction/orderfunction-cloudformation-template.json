@@ -33,12 +33,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "orderlambda",
+            "orderprocessor",
             {
               "Fn::Join": [
                 "",
                 [
-                  "orderlambda",
+                  "orderprocessor",
                   "-",
                   {
                     "Ref": "env"
@@ -69,7 +69,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-marketplace-dev-225232-deployment",
-          "S3Key": "amplify-builds/orderlambda-587a79384272434e5750-build.zip"
+          "S3Key": "amplify-builds/orderfunction-457a5866336b337a566b-build.zip"
         }
       }
     },
@@ -79,12 +79,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "marketplaceLambdaRole42b91465",
+            "marketplaceLambdaRole8f1cab3a",
             {
               "Fn::Join": [
                 "",
                 [
-                  "marketplaceLambdaRole42b91465",
+                  "marketplaceLambdaRole8f1cab3a",
                   "-",
                   {
                     "Ref": "env"

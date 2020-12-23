@@ -2,23 +2,25 @@
     "paths": [
         {
             "name": "/charge",
-            "lambdaFunction": "orderlambda",
+            "lambdaFunction": "orderfunction",
             "privacy": {
                 "private": true,
                 "auth": [
                     "/POST",
+                    "/GET",
                     "/PUT",
-                    "/PATCH"
+                    "/PATCH",
+                    "/DELETE"
                 ]
             },
             "policyResourceName": "/charge"
         }
     ],
-    "resourceName": "orderlambda",
-    "apiName": "orderlambda",
+    "resourceName": "orderprocessor",
+    "apiName": "orderprocessor",
     "functionArns": [
         {
-            "lambdaFunction": "orderlambda"
+            "lambdaFunction": "orderfunction"
         }
     ],
     "privacy": {
@@ -30,7 +32,7 @@
     "dependsOn": [
         {
             "category": "function",
-            "resourceName": "orderlambda",
+            "resourceName": "orderfunction",
             "attributes": [
                 "Name",
                 "Arn"

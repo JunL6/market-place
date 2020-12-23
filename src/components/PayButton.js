@@ -16,34 +16,43 @@ export default function PayButton({ product, user }) {
 
 	async function handleToken(token) {
 		// setIsLoading(true);
+		console.log(token);
 		try {
-			const result = await API.post("orderlambda", "/charge", {
-				body: {
-					token,
-					charge: {
-						currency: stripeConfig.currency,
-						amount: product.price,
-						description: product.description,
+			const result = await API.post(
+				"orderprocessor",
+				// "https://d24t6aoqzf5gkl.cloudfront.net/charge",
+				"/charge",
+				// "localhost:3000/charge",
+				{
+					body: {
+						token,
+						charge: {
+							currency: stripeConfig.currency,
+							amount: product.price,
+							description: product.description,
+						},
 					},
-				},
-			});
-			if (result && result.status === "succeeded") {
-				Notification.success({
-					title: "Success",
-					message: "Purchase Success!",
-				});
-			} else {
-				Notification.error({
-					title: "Error",
-					message: "Failed to Process Payment",
-				});
-			}
+				}
+			);
+			// if (result && result.status === "succeeded") {
+			// 	Notification.success({
+			// 		title: "Success",
+			// 		message: "Purchase Success!",
+			// 	});
+			// } else {
+			// 	Notification.error({
+			// 		title: "Error",
+			// 		message: "Failed to Process Payment",
+			// 	});
+			// }
+
+			console.log(result);
 		} catch (err) {
 			console.log(err);
-			Notification.error({
-				title: "Error",
-				message: "Failed to Process Payment",
-			});
+			// Notification.error({
+			// 	title: "Error",
+			// 	message: "Failed to Process Payment",
+			// });
 		} finally {
 			// setIsLoading(false);
 		}
