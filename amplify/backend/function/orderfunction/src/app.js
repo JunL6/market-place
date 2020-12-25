@@ -20,8 +20,8 @@ var AWS = require("aws-sdk");
 
 // aws-sdk config
 const aws_config = {
-	accessKeyId: "AKIAJLMWMKWR47CAA7FA",
-	secretAccessKey: "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",
+	accessKeyId: process.env.ACCESS_KEY_ID,
+	secretAccessKey: process.env.SECRET_ACCESS_KEY,
 	region: "us-east-1",
 	adminEmail: "l.jun1717@gmail.com",
 };
