@@ -16,6 +16,17 @@ var bodyParser = require("body-parser");
 var awsServerlessExpressMiddleware = require("aws-serverless-express/middleware");
 require("dotenv").config();
 var stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+var AWS = require("aws-sdk");
+
+// aws-sdk config
+const aws_config = {
+	accessKeyId: "AKIAJLMWMKWR47CAA7FA",
+	secretAccessKey: "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",
+	region: "us-east-1",
+	adminEmail: "l.jun1717@gmail.com",
+};
+
+var ses = new AWS.SES(aws_config);
 
 // declare a new express app
 var app = express();
@@ -36,7 +47,7 @@ app.use(function (req, res, next) {
  * Example post method *
  ****************************/
 
-app.post("/charge", async function (req, res) {
+const chargeHandler = async (req, res, next) => {
 	// Add your code here
 	// res.json({ success: "post call succeed!", url: req.url, body: req.body });
 	const { token } = req.body;
@@ -49,13 +60,55 @@ app.post("/charge", async function (req, res) {
 			currency,
 			description,
 		});
-		res.json(charge);
+		// res.json(charge);
+		if (charge.status === "succeeded") {
+			req.charge = charge;
+			req.description = description;
+			next();
+		}
 	} catch (err) {
 		res
 			.status(500)
 			.json({ error: err, message: "failed to process stripe payment" });
 	}
-});
+};
+
+const emailHandler = (req, res) => {
+	const { charge, description } = req;
+
+	ses.sendEmail(
+		{
+			Source: aws_config.adminEmail,
+			ReturnPath: aws_config.adminEmail,
+			Destination: {
+				ToAddresses: [aws_config.adminEmail],
+			},
+			Message: {
+				Subject: {
+					Data: "Order Details - CAMarketPlace",
+				},
+				Body: {
+					Html: {
+						Charset: "UTF-8",
+						Data: `<h3>Order Processed!</h3><div>${description}</div>`,
+					},
+				},
+			},
+		},
+		(err, data) => {
+			if (err) {
+				return res.status(500).json({ error: err });
+			}
+			res.json({
+				message: "Order Processed Successfully!",
+				charge,
+				data,
+			});
+		}
+	);
+};
+
+app.post("/charge", chargeHandler, emailHandler);
 
 app.listen(3000, function () {
 	console.log("App started");

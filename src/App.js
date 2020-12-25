@@ -12,9 +12,11 @@ import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import MarketPage from "./pages/MarketPage";
 import Navbar from "./components/Navbar";
-import { Auth } from "aws-amplify";
+import { API, Auth, graphqlOperation, Hub } from "aws-amplify";
 /* try: worked. CSS for components in "aws-amplify-react" */
 import "@aws-amplify/ui/dist/style.css";
+import { registerUser } from "./graphql/mutations";
+import { getUser } from "./graphql/queries";
 
 export const UserContext = React.createContext();
 
@@ -27,7 +29,53 @@ function App() {
 			setAuthState(nextAuthState);
 			setUser(authData);
 		});
+
+		/* Auth event listener (https://docs.amplify.aws/lib/auth/auth-events/q/platform/js)
+			feat: when the user signs in, check if the user email has registered for 'User' table. If not: register. 
+		*/
+		Hub.listen("auth", (data) => {
+			// console.log(data);
+			console.log(data);
+			switch (data.payload.event) {
+				case "signIn":
+					registerNewUser(
+						data.payload.data.attributes.sub,
+						data.payload.data.attributes.email,
+						data.payload.data.username
+					);
+					break;
+			}
+		});
 	}, []);
+
+	async function registerNewUser(userId, email, username) {
+		try {
+			// debugge r;
+			const getUserData = await API.graphql(
+				graphqlOperation(getUser, {
+					id: userId,
+				})
+			);
+
+			console.log(getUserData);
+
+			if (!getUserData.data.getUser) {
+				const result = await API.graphql(
+					graphqlOperation(registerUser, {
+						input: {
+							id: userId,
+							email,
+							username,
+						},
+					})
+				);
+
+				console.log(result.data);
+			} else console.log(`${username} has already registered.`);
+		} catch (err) {
+			console.log(err);
+		}
+	}
 
 	async function handleSignOut() {
 		try {
