@@ -17,6 +17,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import { deleteProduct, updateProduct } from "../graphql/mutations";
 
 export default function Product({ product }) {
+
 	const user = useContext(UserContext);
 	const [isOwner, setIsOwner] = useState(
 		product.owner === user.user.attributes.sub

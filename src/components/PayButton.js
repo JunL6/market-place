@@ -1,8 +1,9 @@
-import { API } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import { Notification } from "element-react";
 import React, { useContext } from "react";
 import StripeCheckout from "react-stripe-checkout";
 // import { IsLoadingContext } from "../pages/MarketPage";
+import { getUser } from "../graphql/queries";
 
 const stripeConfig = {
 	currency: "USD",
@@ -11,48 +12,56 @@ const stripeConfig = {
 };
 
 export default function PayButton({ product, user }) {
-	// const { setIsLoading } = useContext(IsLoadingContext);
-	// console.log(setIsLoading);
+	async function getProductOwner() {
+		try {
+			const result = await API.graphql(
+				graphqlOperation(getUser, {
+					id: product.owner,
+				})
+			);
+			return result.data.getUser.email;
+		} catch (err) {
+			console.error(`Error fetching product owener`, err);
+		}
+	}
 
 	async function handleToken(token) {
-		// setIsLoading(true);
+		const productOwnerEmail = await getProductOwner();
+		console.log(productOwnerEmail);
 		console.log(token);
 		try {
-			const result = await API.post(
-				"orderprocessor",
-				// "https://d24t6aoqzf5gkl.cloudfront.net/charge",
-				"/charge",
-				// "localhost:3000/charge",
-				{
-					body: {
-						token,
-						charge: {
-							currency: stripeConfig.currency,
-							amount: product.price,
-							description: product.description,
-						},
+			const result = await API.post("orderprocessor", "/charge", {
+				body: {
+					token,
+					charge: {
+						currency: stripeConfig.currency,
+						amount: product.price,
+						description: product.description,
+						productOwnerEmail,
+						shipped: product.shipped,
+						customerEmail: user.user.attributes.email,
 					},
-				}
-			);
-			// if (result && result.status === "succeeded") {
-			// 	Notification.success({
-			// 		title: "Success",
-			// 		message: "Purchase Success!",
-			// 	});
-			// } else {
-			// 	Notification.error({
-			// 		title: "Error",
-			// 		message: "Failed to Process Payment",
-			// 	});
-			// }
+				},
+			});
+			if (result && result.message === `Order Processed Successfully!`) {
+				Notification.success({
+					title: "Success",
+					message: "Purchase Success!",
+				});
+			} else {
+				Notification.error({
+					title: "Error",
+					message: "Failed to Process Payment",
+				});
+			}
 
 			console.log(result);
 		} catch (err) {
-			console.log(err);
-			// Notification.error({
-			// 	title: "Error",
-			// 	message: "Failed to Process Payment",
-			// });
+			console.error(`Error Handling Payment`, err);
+			Notification.error({
+				title: "Error",
+				message: "Failed to Process Payment",
+			});
 		} finally {
 			// setIsLoading(false);
 		}

@@ -69,7 +69,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-marketplace-dev-225232-deployment",
-          "S3Key": "amplify-builds/orderfunction-6e455a684831714a2f74-build.zip"
+          "S3Key": "amplify-builds/orderfunction-44614236713678534178-build.zip"
         }
       }
     },

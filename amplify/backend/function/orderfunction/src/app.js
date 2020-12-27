@@ -51,7 +51,14 @@ const chargeHandler = async (req, res, next) => {
 	// Add your code here
 	// res.json({ success: "post call succeed!", url: req.url, body: req.body });
 	const { token } = req.body;
-	const { currency, amount, description } = req.body.charge;
+	const {
+		currency,
+		amount,
+		description,
+		productOwnerEmail,
+		shipped,
+		customerEmail,
+	} = req.body.charge;
 
 	try {
 		const charge = await stripe.charges.create({
@@ -64,6 +71,10 @@ const chargeHandler = async (req, res, next) => {
 		if (charge.status === "succeeded") {
 			req.charge = charge;
 			req.description = description;
+			req.productOwnerEmail = productOwnerEmail;
+			req.shipped = shipped;
+			req.customerEmail = customerEmail;
+			console.log("charge successful");
 			next();
 		}
 	} catch (err) {
@@ -73,8 +84,19 @@ const chargeHandler = async (req, res, next) => {
 	}
 };
 
+function convertCentsToDollars(price) {
+	return (Number.parseFloat(price) / 100).toFixed(2);
+}
+
 const emailHandler = (req, res) => {
-	const { charge, description } = req;
+	const {
+		charge,
+		description,
+		productOwnerEmail,
+		shipped,
+		customerEmail,
+	} = req;
+	// const { charge, description } = req.body;
 
 	ses.sendEmail(
 		{
@@ -90,7 +112,23 @@ const emailHandler = (req, res) => {
 				Body: {
 					Html: {
 						Charset: "UTF-8",
-						Data: `<h3>Order Processed!</h3><div>${description}</div>`,
+						Data: `<h3>Order Processed!</h3>
+						<p><span style="font-weight: bold">${description}</span> - $${convertCentsToDollars(
+							charge.amount
+						)}</p>
+						<p>Customer Email: <a href="mailto:${customerEmail}">${customerEmail}</a></p>
+						<p>Contact Your Seller: <a href="mailto:${productOwnerEmail}">${productOwnerEmail}</a></p>  
+						${
+							shipped
+								? `<h4>Mailing Address</h4>
+							<div>${charge.source.name}</div>
+							<div>${charge.source.address_line1}</div>
+							<div>${charge.source.address_city}, ${charge.source.address_state} ${charge.source.address_zip}</div>
+							
+							`
+								: `<p>Product will be emailed.</p>`
+						}
+						`,
 					},
 				},
 			},
