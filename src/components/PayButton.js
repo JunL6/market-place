@@ -1,9 +1,11 @@
 import { API, graphqlOperation } from "aws-amplify";
-import { Notification } from "element-react";
+import { Message, Notification } from "element-react";
 import React, { useContext } from "react";
 import StripeCheckout from "react-stripe-checkout";
+import { createOrder } from "../graphql/mutations";
 // import { IsLoadingContext } from "../pages/MarketPage";
 import { getUser } from "../graphql/queries";
+import { browserHistory } from "../App";
 
 const stripeConfig = {
 	currency: "USD",
@@ -43,11 +45,44 @@ export default function PayButton({ product, user }) {
 					},
 				},
 			});
-			if (result && result.message === `Order Processed Successfully!`) {
+			if (result && result.charge.status === `succeeded`) {
+				/* create order: graphql operation */
+				const shippingAddress = product.shipped
+					? {
+							city: result.charge.source.address_city,
+							country: result.charge.source.address_country,
+							address_line1: result.charge.source.address_line1,
+							// address_line2: result.charge.source.address_line2,
+							address_state: result.charge.source.address_state,
+							address_zip: result.charge.source.address_zip,
+					  }
+					: null;
+
+				const createOrderResult = await API.graphql(
+					graphqlOperation(createOrder, {
+						input: {
+							orderProductId: product.id,
+							userID: user.user.attributes.sub,
+							shippingAddress,
+						},
+					})
+				);
+
+				console.log(createOrderResult);
+
 				Notification.success({
 					title: "Success",
 					message: "Purchase Success!",
 				});
+
+				setTimeout(() => {
+					browserHistory.push("/");
+					Message({
+						message: "Check your verified email for order details",
+						type: "success",
+						showClose: true,
+					});
+				}, 3000);
 			} else {
 				Notification.error({
 					title: "Error",

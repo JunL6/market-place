@@ -6,7 +6,7 @@ import {
 } from "@aws-amplify/ui-react";
 import { Authenticator, Greetings } from "aws-amplify-react";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
-import { BrowserRouter, Route } from "react-router-dom";
+import { Router, Route } from "react-router-dom";
 import "./App.css";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
@@ -17,8 +17,11 @@ import { API, Auth, graphqlOperation, Hub } from "aws-amplify";
 import "@aws-amplify/ui/dist/style.css";
 import { registerUser } from "./graphql/mutations";
 import { getUser } from "./graphql/queries";
+import { createBrowserHistory } from "history";
 
 export const UserContext = React.createContext();
+
+export const browserHistory = createBrowserHistory();
 
 function App() {
 	const [authState, setAuthState] = useState();
@@ -87,7 +90,7 @@ function App() {
 
 	return authState === AuthState.SignedIn && user ? (
 		<UserContext.Provider value={{ user }}>
-			<BrowserRouter>
+			<Router history={browserHistory}>
 				<Navbar user={user} handleSignOut={handleSignOut} />
 				<div className="app-container">
 					<Route exact path="/" component={HomePage} />
@@ -99,7 +102,7 @@ function App() {
 						)}
 					/>
 				</div>
-			</BrowserRouter>
+			</Router>
 		</UserContext.Provider>
 	) : (
 		<AmplifyAuthenticator />
