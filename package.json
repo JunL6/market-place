@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.1.10",
     "aws-amplify": "^3.3.11",
     "aws-amplify-react": "^4.2.16",
+    "date-fns": "^2.16.1",
     "element-react": "^1.4.34",
     "element-theme-default": "^1.4.13",
     "react": "^17.0.1",

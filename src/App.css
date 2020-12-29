@@ -153,6 +153,10 @@ body {
 	margin-top: 0.6em;
 }
 
+.market-page .label-icon {
+	padding-right: 0.2em;
+}
+
 .market-page-new-product {
 	display: flex;
 	align-items: center;

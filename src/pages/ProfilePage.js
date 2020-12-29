@@ -88,7 +88,7 @@ export default function ProfilePage({ cognitoUser }) {
 					label={
 						<>
 							<i className="el-icon-information"></i>
-							<span>Summary</span>
+							<span>Account</span>
 						</>
 					}
 					name="1"

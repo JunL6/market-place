@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 export function convertDollarsToCents(price) {
 	return (Number.parseFloat(price) * 100).toFixed(0);
 }
@@ -34,4 +36,8 @@ export function displayDate(date) {
 
 export function displayTime(date) {
 	return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+}
+
+export function convertTime(date) {
+	return format(date, "MMM d, yyyy kk:mm:ss");
 }

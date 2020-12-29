@@ -44,7 +44,6 @@ export default function HomePage() {
 
 	return (
 		<div>
-			homepage
 			<NewMarket
 				searchTerm={searchTerm}
 				setSearchTerm={setSearchTerm}
