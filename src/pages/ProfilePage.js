@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Card, Loading, Tabs } from "element-react";
+import { Card, Loading, Table, Tabs } from "element-react";
 import { API, graphqlOperation } from "aws-amplify";
-import { convertCentsToDollars } from "../utils";
+import {
+	COMPARE_NOTES_CREATEDTIME_ASCENDING,
+	convertCentsToDollars,
+	displayDate,
+	displayTime,
+} from "../utils";
 import { S3Image } from "aws-amplify-react";
 
 const getUserQuery = /* GraphQL */ `
@@ -9,7 +14,7 @@ const getUserQuery = /* GraphQL */ `
 		getUser(id: $id) {
 			email
 			username
-			orders {
+			orders(sortDirection: DESC) {
 				items {
 					id
 					createdAt
@@ -41,7 +46,7 @@ const getUserQuery = /* GraphQL */ `
 export default function ProfilePage({ cognitoUser }) {
 	const [userInfo, setUserInfo] = useState();
 
-	console.log(cognitoUser.attributes.sub);
+	console.log(cognitoUser);
 
 	async function getUserInfo() {
 		if (cognitoUser && cognitoUser.attributes.sub) {
@@ -63,10 +68,23 @@ export default function ProfilePage({ cognitoUser }) {
 		getUserInfo();
 	}, [cognitoUser]);
 
+	/* columns for <Table /> */
+	const columns = [
+		{
+			prop: "name",
+			// width: 200,
+		},
+		{
+			prop: "value",
+			// width: 400,
+		},
+	];
+
 	return (
 		<>
 			<Tabs type="card" className="profile-page">
 				<Tabs.Pane
+					className="summary"
 					label={
 						<>
 							<i className="el-icon-information"></i>
@@ -76,6 +94,25 @@ export default function ProfilePage({ cognitoUser }) {
 					name="1"
 				>
 					<h3>PROFILE SUMMARY</h3>
+					<Table
+						className="user-profile-table"
+						stripe={true}
+						showHeader={false}
+						columns={columns}
+						border={true}
+						data={[
+							{ name: "Your Id", value: cognitoUser.attributes.sub },
+							{ name: "Username", value: cognitoUser.username },
+							{
+								name: "Your Email",
+								value: cognitoUser.attributes.email,
+							},
+							{
+								name: "Phone Number",
+								value: cognitoUser.attributes.phone_number,
+							},
+						]}
+					/>
 				</Tabs.Pane>
 				<Tabs.Pane
 					label={
@@ -88,50 +125,51 @@ export default function ProfilePage({ cognitoUser }) {
 				>
 					{/* <Loading loading={!Boolean(userInfo)}> */}
 					{userInfo &&
-						userInfo.orders.items.map((order) => (
-							<Card
-								className="order-card"
-								key={order.id}
-								bodyStyle={{ display: "flex", width: "40em" }}
-							>
-								<S3Image
-									className="product-image"
-									imgKey={order.product.file.key}
-									theme={{
-										photoImg: {
-											// maxWidth: "100%",
-											// maxHeight: "100%",
-											width: "8em",
-											height: "8em",
-											objectFit: "cover",
-											borderRadius: "20px",
-										},
-									}}
-								/>
-								<div className="order-content">
-									<div className="product-name">
-										{order.product.description}
+						userInfo.orders.items
+							.sort(COMPARE_NOTES_CREATEDTIME_ASCENDING)
+							.map((order) => (
+								<Card
+									className="order-card"
+									key={order.id}
+									bodyStyle={{ display: "flex", width: "40em" }}
+								>
+									<S3Image
+										className="product-image"
+										imgKey={order.product.file.key}
+										theme={{
+											photoImg: {
+												width: "8em",
+												height: "8em",
+												objectFit: "cover",
+												borderRadius: "20px",
+											},
+										}}
+									/>
+									<div className="order-content">
+										<div className="product-name">
+											{order.product.description}
+										</div>
+										<div>${convertCentsToDollars(order.product.price)}</div>
+										<div>
+											<small>{`${displayDate(
+												new Date(order.createdAt)
+											)} ${displayTime(new Date(order.createdAt))}`}</small>
+										</div>
+										<div>
+											Shipping:{" "}
+											{order.product.shipped
+												? // <div>
+												  // 	<i>{order.shippingAddress.address_line1}</i>
+												  // 	<div>
+												  // 		<i>{`${order.shippingAddress.city}, ${order.shippingAddress.address_state}, ${order.shippingAddress.country}, ${order.shippingAddress.address_zip}`}</i>
+												  // 	</div>
+												  // </div>
+												  `Delivery`
+												: `Via Email`}
+										</div>
 									</div>
-									<div>${convertCentsToDollars(order.product.price)}</div>
-									<div>
-										<small>{order.createdAt}</small>
-									</div>
-									<div>
-										Shipping:{" "}
-										{order.product.shipped ? (
-											<div>
-												<i>{order.shippingAddress.address_line1}</i>
-												<div>
-													<i>{`${order.shippingAddress.city}, ${order.shippingAddress.address_state}, ${order.shippingAddress.country}, ${order.shippingAddress.address_zip}`}</i>
-												</div>
-											</div>
-										) : (
-											`Via Email`
-										)}
-									</div>
-								</div>
-							</Card>
-						))}
+								</Card>
+							))}
 					{/* </Loading> */}
 				</Tabs.Pane>
 			</Tabs>

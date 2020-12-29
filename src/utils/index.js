@@ -11,3 +11,27 @@ export const COMPARE_NOTES_CREATEDTIME_ASCENDING = function (a, b) {
 		? 1
 		: -1;
 };
+
+const MONTH_NAMES = [
+	"January",
+	"February",
+	"March",
+	"April",
+	"May",
+	"June",
+	"July",
+	"August",
+	"September",
+	"October",
+	"November",
+	"December",
+];
+export function displayDate(date) {
+	return `${
+		MONTH_NAMES[date.getMonth()]
+	} ${date.getDate()}, ${date.getFullYear()}`;
+}
+
+export function displayTime(date) {
+	return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+}

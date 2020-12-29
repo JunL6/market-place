@@ -14,7 +14,7 @@ amplify-authenticator {
 } */
 
 /* App.js */
-.app-container {
+body {
 	background-color: rgba(233, 243, 254, 0.4);
 }
 
@@ -248,17 +248,27 @@ amplify-authenticator {
 	padding-right: 0.2em;
 }
 
+.profile-page .summary {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.profile-page .user-profile-table {
+	max-width: 48em;
+}
+
 .profile-page .order-card {
 	margin: 0.6em auto;
-	width: 36em;
+	width: 30em;
 	border-radius: 20px;
 }
 .profile-page .order-card .order-content {
-	width: 24em;
+	width: 18em;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
-	/* justify-content: space-between; */
+	justify-content: space-evenly;
 	text-align: right;
 }
 
