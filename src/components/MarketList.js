@@ -16,7 +16,7 @@ const cardBodyStyle = {
 	display: "flex",
 	flexDirection: "row",
 	justifyContent: "space-between",
-	backgroundColor: "rgba(233, 243, 254, 0.4)",
+	// backgroundColor: "rgba(233, 243, 254, 0.4)",
 };
 
 export default function MarketList(props) {

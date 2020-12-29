@@ -14,6 +14,10 @@ amplify-authenticator {
 } */
 
 /* App.js */
+.app-container {
+	background-color: rgba(233, 243, 254, 0.4);
+}
+
 @media (min-width: 768px) {
 	.app-container {
 		padding: 1.6em 4em 1.6em 4em;
@@ -232,4 +236,37 @@ amplify-authenticator {
 	background-color: none !important;
 	box-shadow: none !important;
 	text-shadow: none !important;
+}
+
+/* ProfilePage.js */
+.profile-page .el-tabs__nav-scroll {
+	display: flex !important;
+	justify-content: center !important;
+}
+
+.profile-page .el-tabs__item i {
+	padding-right: 0.2em;
+}
+
+.profile-page .order-card {
+	margin: 0.6em auto;
+	width: 36em;
+	border-radius: 20px;
+}
+.profile-page .order-card .order-content {
+	width: 24em;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	/* justify-content: space-between; */
+	text-align: right;
+}
+
+.profile-page .order-card .product-name {
+	font-size: larger;
+	font-weight: bolder;
+}
+
+.profile-page .order-card .product-image {
+	margin-right: 1em;
 }

@@ -94,7 +94,9 @@ function App() {
 				<Navbar user={user} handleSignOut={handleSignOut} />
 				<div className="app-container">
 					<Route exact path="/" component={HomePage} />
-					<Route path="/profile" component={ProfilePage} />
+					<Route path="/profile">
+						<ProfilePage cognitoUser={user} />
+					</Route>
 					<Route
 						path="/markets/:marketId"
 						component={({ match }) => (
