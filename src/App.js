@@ -8,6 +8,7 @@ import { Authenticator, Greetings } from "aws-amplify-react";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 import { Router, Route } from "react-router-dom";
 import "./App.css";
+import HomePage2 from "./pages/HomePage2";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
 import MarketPage from "./pages/MarketPage";
@@ -93,7 +94,8 @@ function App() {
 			<Router history={browserHistory}>
 				<Navbar user={user} handleSignOut={handleSignOut} />
 				<div className="app-container">
-					<Route exact path="/" component={HomePage} />
+					<Route exact path="/markets" component={HomePage} />
+					<Route exact path="/" component={HomePage2} />
 					<Route path="/profile">
 						<ProfilePage cognitoUser={user} />
 					</Route>

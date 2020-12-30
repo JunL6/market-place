@@ -14,6 +14,7 @@ type Market @model @searchable {
 
 type Product
 	@model
+	@searchable
 	@auth(
 		rules: [
 			{
@@ -25,6 +26,7 @@ type Product
 	)
 	@key(name: "MarketProducts", fields: ["marketID"]) {
 	id: ID!
+	# name: String!
 	description: String!
 	file: S3Object!
 	price: Float!
