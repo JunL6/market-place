@@ -15,6 +15,7 @@ export const createMarket = /* GraphQL */ `
       products {
         items {
           id
+          name
           description
           price
           shipped
@@ -43,6 +44,7 @@ export const updateMarket = /* GraphQL */ `
       products {
         items {
           id
+          name
           description
           price
           shipped
@@ -71,6 +73,7 @@ export const deleteMarket = /* GraphQL */ `
       products {
         items {
           id
+          name
           description
           price
           shipped
@@ -92,6 +95,7 @@ export const createProduct = /* GraphQL */ `
   ) {
     createProduct(input: $input, condition: $condition) {
       id
+      name
       description
       file {
         bucket
@@ -125,6 +129,7 @@ export const updateProduct = /* GraphQL */ `
   ) {
     updateProduct(input: $input, condition: $condition) {
       id
+      name
       description
       file {
         bucket
@@ -158,6 +163,7 @@ export const deleteProduct = /* GraphQL */ `
   ) {
     deleteProduct(input: $input, condition: $condition) {
       id
+      name
       description
       file {
         bucket
@@ -241,6 +247,7 @@ export const createOrder = /* GraphQL */ `
       id
       product {
         id
+        name
         description
         file {
           bucket
@@ -295,6 +302,7 @@ export const deleteOrder = /* GraphQL */ `
       id
       product {
         id
+        name
         description
         file {
           bucket

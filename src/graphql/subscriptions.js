@@ -12,6 +12,7 @@ export const onCreateMarket = /* GraphQL */ `
       products {
         items {
           id
+          name
           description
           price
           shipped
@@ -37,6 +38,7 @@ export const onUpdateMarket = /* GraphQL */ `
       products {
         items {
           id
+          name
           description
           price
           shipped
@@ -62,6 +64,7 @@ export const onDeleteMarket = /* GraphQL */ `
       products {
         items {
           id
+          name
           description
           price
           shipped
@@ -80,6 +83,7 @@ export const onCreateProduct = /* GraphQL */ `
   subscription OnCreateProduct {
     onCreateProduct {
       id
+      name
       description
       file {
         bucket
@@ -110,6 +114,7 @@ export const onUpdateProduct = /* GraphQL */ `
   subscription OnUpdateProduct {
     onUpdateProduct {
       id
+      name
       description
       file {
         bucket
@@ -140,6 +145,7 @@ export const onDeleteProduct = /* GraphQL */ `
   subscription OnDeleteProduct {
     onDeleteProduct {
       id
+      name
       description
       file {
         bucket

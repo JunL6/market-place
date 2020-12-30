@@ -23,6 +23,7 @@ const getMarket = /* GraphQL */ `
 			createdAt
 			products {
 				items {
+					name
 					id
 					description
 					price

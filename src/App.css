@@ -197,7 +197,7 @@ body {
 
 /* Product.js */
 .product-card {
-	margin-top: 2em;
+	margin-bottom: 2em;
 }
 
 .product-card .el-card {
@@ -208,6 +208,15 @@ body {
 	display: inline-block;
 	margin: 0.4em 0.8em;
 }
+
+/* .product-card .description {
+	display: inline-block;
+	margin: 0.4em 0.8em;
+	max-width: 15em;
+	max-height: 3em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+} */
 
 .product-card .shipped {
 	margin: 0 0.8em 0.4em 0.8em;

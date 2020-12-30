@@ -12,6 +12,7 @@ export const getMarket = /* GraphQL */ `
       products {
         items {
           id
+          name
           description
           price
           shipped
@@ -52,6 +53,7 @@ export const getProduct = /* GraphQL */ `
   query GetProduct($id: ID!) {
     getProduct(id: $id) {
       id
+      name
       description
       file {
         bucket
@@ -87,6 +89,7 @@ export const listProducts = /* GraphQL */ `
     listProducts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        name
         description
         file {
           bucket
@@ -177,6 +180,7 @@ export const searchProducts = /* GraphQL */ `
     ) {
       items {
         id
+        name
         description
         file {
           bucket

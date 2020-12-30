@@ -17,16 +17,20 @@ import { API, graphqlOperation } from "aws-amplify";
 import { deleteProduct, updateProduct } from "../graphql/mutations";
 
 export default function Product({ product }) {
-
 	const user = useContext(UserContext);
 	const [isOwner, setIsOwner] = useState(
 		product.owner === user.user.attributes.sub
 	);
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
+	const [productName, setProductName] = useState(product.name);
 	const [description, setDescription] = useState(product.description);
 	const [price, setPrice] = useState(convertCentsToDollars(product.price));
 	const [isShipped, setIsShipped] = useState(product.shipped);
 	const [isUpdating, setIsUpdating] = useState(false);
+
+	function handleProductNameChange(value) {
+		setProductName(value);
+	}
 
 	function handleDescriptionChange(value) {
 		setDescription(value);
@@ -47,6 +51,7 @@ export default function Product({ product }) {
 			const updateResult = await API.graphql(
 				graphqlOperation(updateProduct, {
 					input: {
+						name: productName,
 						id: product.id,
 						description: description,
 						price: convertDollarsToCents(price),
@@ -139,7 +144,8 @@ export default function Product({ product }) {
 						},
 					}}
 				/>
-				<strong>{product.description}</strong>
+				<strong>{product.name}</strong>
+				{/* <div className="description">{product.description}</div> */}
 				<div className="shipped">
 					<i className="el-icon-message" />
 					{product.shipped ? "Shipped" : "Emailed"}
@@ -169,6 +175,14 @@ export default function Product({ product }) {
 			>
 				<Dialog.Body>
 					<Form onSubmit={handleFormSubmit}>
+						<Form.Item label="Product Name">
+							<Input
+								value={productName}
+								type="text"
+								placeholder="product name"
+								onChange={handleProductNameChange}
+							/>
+						</Form.Item>
 						<Form.Item label="Update Product Description">
 							<Input
 								value={description}

@@ -15,6 +15,7 @@ import awsExports from "../aws-exports";
 import { convertDollarsToCents } from "../utils";
 
 export default function NewProduct({ marketId }) {
+	const [productName, setProductName] = useState("");
 	const [description, setDescription] = useState("");
 	const [price, setPrice] = useState();
 	const [isShipped, setIsShipped] = useState();
@@ -23,6 +24,10 @@ export default function NewProduct({ marketId }) {
 	const photoPicker = useRef(null);
 	const [uploadProgress, setUploadProgress] = useState();
 	// todo: progress bar
+
+	function handleProductNameChange(value) {
+		setProductName(value);
+	}
 
 	function handleDescriptionChange(value) {
 		setDescription(value);
@@ -64,6 +69,7 @@ export default function NewProduct({ marketId }) {
 			const newProduct = await API.graphql(
 				graphqlOperation(createProduct, {
 					input: {
+						name: productName,
 						description: description,
 						file: S3Object,
 						price: convertDollarsToCents(price),
@@ -81,6 +87,7 @@ export default function NewProduct({ marketId }) {
 			console.error(error);
 		} finally {
 			/* try: 看看视觉上，button的loading状态的取消是不是和notification的出现是同时的 */
+			setProductName("");
 			setDescription("");
 			setPrice();
 			setIsShipped();
@@ -99,7 +106,15 @@ export default function NewProduct({ marketId }) {
 		<div className="new-product-form">
 			<h3>ADD NEW PRODUCT</h3>
 			<Form onSubmit={handleFormSubmit}>
-				<Form.Item label="Add Product Description">
+				<Form.Item label="Product Name">
+					<Input
+						value={productName}
+						type="text"
+						placeholder="product name"
+						onChange={handleProductNameChange}
+					/>
+				</Form.Item>
+				<Form.Item label="Product Description">
 					<Input
 						value={description}
 						type="textarea"
@@ -107,7 +122,7 @@ export default function NewProduct({ marketId }) {
 						placeholder="description"
 					/>
 				</Form.Item>
-				<Form.Item label="Set Product Price">
+				<Form.Item label="Product Price">
 					<Input
 						type="number"
 						placeholder="Price ($USD)"
@@ -157,6 +172,7 @@ export default function NewProduct({ marketId }) {
 						nativeType="submit"
 						type="primary"
 						disabled={
+							!productName ||
 							!description ||
 							!price ||
 							isShipped === undefined ||

@@ -38,7 +38,7 @@ export default function HomePage() {
 			const searchResult = await API.graphql(
 				graphqlOperation(searchProducts, {
 					filter: {
-						description: { match: searchTerm },
+						name: { wildcard: `*${searchTerm}*` },
 					},
 				})
 			);

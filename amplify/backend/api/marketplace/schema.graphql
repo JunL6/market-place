@@ -26,7 +26,7 @@ type Product
 	)
 	@key(name: "MarketProducts", fields: ["marketID"]) {
 	id: ID!
-	# name: String!
+	name: String!
 	description: String!
 	file: S3Object!
 	price: Float!
