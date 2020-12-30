@@ -4,8 +4,8 @@ import { searchProducts, listProducts } from "../graphql/queries";
 import ProductSearchInput from "../components/ProductSearchInput";
 import Product from "../components/Product";
 import { COMPARE_NOTES_CREATEDTIME_ASCENDING } from "../utils";
-import { render } from "@testing-library/react";
 import { Button } from "element-react";
+import ProductList from "../components/ProductList";
 
 export default function HomePage() {
 	const [searchTerm, setSearchTerm] = useState("");
@@ -73,23 +73,19 @@ export default function HomePage() {
 				handleSearchSubmit={handleSearchSubmit}
 				isSearchLoading={isSearchLoading}
 			/>
-			<div className="product-list">
-				{shouldShowAllProducts ? (
-					renderProducts(allProductList)
-				) : (
-					<div>
-						<h2>
-							<Button icon="arrow-left" onClick={showAllProducts} />
-							<span className="search-result-text">
-								{`showing search results for "${currentSearchTerm}": ${searchResultList.length} matching`}
-							</span>
-						</h2>
-						<div className="product-list">
-							{renderProducts(searchResultList)}
-						</div>
-					</div>
-				)}
-			</div>
+			{shouldShowAllProducts ? (
+				<ProductList products={allProductList} />
+			) : (
+				<div>
+					<h2>
+						<Button icon="arrow-left" onClick={showAllProducts} />
+						<span className="search-result-text">
+							{`showing search results for "${currentSearchTerm}": ${searchResultList.length} matching`}
+						</span>
+					</h2>
+					<ProductList products={searchResultList} />
+				</div>
+			)}
 		</div>
 	);
 }

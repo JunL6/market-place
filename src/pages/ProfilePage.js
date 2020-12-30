@@ -19,6 +19,7 @@ const getUserQuery = /* GraphQL */ `
 					id
 					createdAt
 					product {
+						name
 						description
 						owner
 						price
@@ -125,7 +126,7 @@ export default function ProfilePage({ cognitoUser }) {
 					}
 					name="2"
 				>
-					{userInfo && userInfo.orders.items.length > 1 ? (
+					{userInfo && userInfo.orders.items.length > 0 ? (
 						userInfo.orders.items
 							.sort(COMPARE_NOTES_CREATEDTIME_ASCENDING)
 							.map((order) => (
@@ -142,14 +143,12 @@ export default function ProfilePage({ cognitoUser }) {
 												width: "8em",
 												height: "8em",
 												objectFit: "cover",
-												borderRadius: "20px",
+												borderRadius: "8px",
 											},
 										}}
 									/>
 									<div className="order-content">
-										<div className="product-name">
-											{order.product.description}
-										</div>
+										<div className="product-name">{order.product.name}</div>
 										<div>${convertCentsToDollars(order.product.price)}</div>
 										<div>
 											<small>{`${displayDate(

@@ -287,7 +287,7 @@ body {
 .profile-page .order-card {
 	margin: 0.6em auto;
 	width: 30em;
-	border-radius: 20px;
+	border-radius: 4px;
 }
 .profile-page .order-card .order-content {
 	width: 18em;
