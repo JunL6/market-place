@@ -60,7 +60,7 @@ type User
 type Order
 	@model(
 		queries: null
-		mutations: { create: "createOrder" }
+		mutations: { create: "createOrder", delete: "deleteOrder" }
 		subscriptions: null
 	)
 	@key(name: "UserOrders", fields: ["userID"]) {

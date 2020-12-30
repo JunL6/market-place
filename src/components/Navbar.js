@@ -15,17 +15,22 @@ export default function Navbar({ user, handleSignOut }) {
 					</NavLink>
 				</Menu.Item>
 				<div className="nav-items">
-					<span className="greeting">Hello, {user.username} </span>
-					<Menu.Item index="2">
+					<Menu.SubMenu
+						index="2"
+						title={user.username}
+						className="nav-sub-menu"
+					>
+						<Menu.Item index="2-1">
+							{/* <Button type="warning" onClick={handleSignOut}> */}
+							<span onClick={handleSignOut}>Sign Out</span>
+						</Menu.Item>
+					</Menu.SubMenu>
+					<span className="greeting"> </span>
+					<Menu.Item index="3">
 						<NavLink to="/profile" className="nav-link">
 							<MdSettings size="1.4em" />
 							Profile
 						</NavLink>
-					</Menu.Item>
-					<Menu.Item index="3">
-						<Button type="warning" onClick={handleSignOut}>
-							Sign Out
-						</Button>
 					</Menu.Item>
 				</div>
 			</div>

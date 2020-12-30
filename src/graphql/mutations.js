@@ -286,3 +286,57 @@ export const createOrder = /* GraphQL */ `
     }
   }
 `;
+export const deleteOrder = /* GraphQL */ `
+  mutation DeleteOrder(
+    $input: DeleteOrderInput!
+    $condition: ModelOrderConditionInput
+  ) {
+    deleteOrder(input: $input, condition: $condition) {
+      id
+      product {
+        id
+        description
+        file {
+          bucket
+          region
+          key
+        }
+        price
+        shipped
+        owner
+        createdAt
+        marketID
+        market {
+          id
+          name
+          tags
+          owner
+          createdAt
+          updatedAt
+        }
+        updatedAt
+      }
+      userID
+      user {
+        id
+        username
+        email
+        registered
+        orders {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      shippingAddress {
+        city
+        country
+        address_line1
+        address_state
+        address_zip
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;

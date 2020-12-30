@@ -62,6 +62,15 @@ body {
 	cursor: default;
 }
 
+.nav-sub-menu .el-menu-item {
+	width: fit-content;
+	min-width: 0 !important;
+}
+
+.nav-sub-menu .el-menu-item span {
+	cursor: pointer;
+}
+
 .app-name {
 	color: orange;
 	border: none !important;
@@ -260,6 +269,10 @@ body {
 
 .profile-page .user-profile-table {
 	max-width: 48em;
+}
+
+.profile-page .orders h3 {
+	text-align: center;
 }
 
 .profile-page .order-card {

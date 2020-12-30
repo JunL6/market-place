@@ -57,6 +57,7 @@ export default function ProfilePage({ cognitoUser }) {
 					})
 				);
 
+				// console.log(result.data.getUser);
 				setUserInfo(result.data.getUser);
 			} catch (err) {
 				console.error(`Error fetching User information`, err);
@@ -115,6 +116,7 @@ export default function ProfilePage({ cognitoUser }) {
 					/>
 				</Tabs.Pane>
 				<Tabs.Pane
+					className="orders"
 					label={
 						<>
 							<i className="el-icon-document"></i>
@@ -123,8 +125,7 @@ export default function ProfilePage({ cognitoUser }) {
 					}
 					name="2"
 				>
-					{/* <Loading loading={!Boolean(userInfo)}> */}
-					{userInfo &&
+					{userInfo && userInfo.orders.items.length > 1 ? (
 						userInfo.orders.items
 							.sort(COMPARE_NOTES_CREATEDTIME_ASCENDING)
 							.map((order) => (
@@ -169,8 +170,10 @@ export default function ProfilePage({ cognitoUser }) {
 										</div>
 									</div>
 								</Card>
-							))}
-					{/* </Loading> */}
+							))
+					) : (
+						<h3>You haven't placed any order yet.</h3>
+					)}
 				</Tabs.Pane>
 			</Tabs>
 		</>
