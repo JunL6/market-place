@@ -220,13 +220,6 @@ export default function MarketPage({ user, marketId }) {
 					}
 					name="2"
 				>
-					{/* <div className="product-list">
-						{market.products.items
-							.sort(COMPARE_NOTES_CREATEDTIME_ASCENDING)
-							.map((product) => {
-								return <Product key={product.id} product={product} />;
-							})}
-					</div> */}
 					<ProductList products={market.products.items} />
 				</Tabs.Pane>
 			</Tabs>
