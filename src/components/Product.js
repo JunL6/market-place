@@ -136,7 +136,6 @@ export default function Product({ product }) {
 			<Card
 				bodyStyle={{
 					padding: 0,
-					//  width: "20em"
 					display: "flex",
 					flexDirection: "column",
 				}}
@@ -146,8 +145,6 @@ export default function Product({ product }) {
 					imgKey={product.file.key}
 					theme={{
 						photoImg: {
-							// maxWidth: "100%",
-							// maxHeight: "100%",
 							width: "15em",
 							height: "20em",
 							objectFit: "cover",
