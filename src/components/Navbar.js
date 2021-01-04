@@ -8,25 +8,37 @@ export default function Navbar({ user, handleSignOut }) {
 	return (
 		<Menu mode="horizontal" theme="dark" defaultActive="1">
 			<div className="nav-container">
-				<Menu.Item index="1">
-					<NavLink to="/" className="nav-link">
-						<FaSellsy color="orange" size="2em" />
-						<span className="app-name">Market Place</span>
+				<div className="nav-links">
+					<Menu.Item index="1">
+						<NavLink to="/" className="nav-link">
+							<FaSellsy color="orange" size="2em" />
+							<span className="app-name">Market Place</span>
+						</NavLink>
+					</Menu.Item>
+					<NavLink to="/markets">
+						<Menu.Item index="2">
+							<span>Markets</span>
+						</Menu.Item>
 					</NavLink>
-				</Menu.Item>
+					<NavLink to="/">
+						<Menu.Item index="3">
+							<span>Products</span>
+						</Menu.Item>
+					</NavLink>
+				</div>
 				<div className="nav-items">
 					<Menu.SubMenu
-						index="2"
+						index="4"
 						title={user.username}
 						className="nav-sub-menu"
 					>
-						<Menu.Item index="2-1">
+						<Menu.Item index="4-1">
 							{/* <Button type="warning" onClick={handleSignOut}> */}
 							<span onClick={handleSignOut}>Sign Out</span>
 						</Menu.Item>
 					</Menu.SubMenu>
 					<span className="greeting"> </span>
-					<Menu.Item index="3">
+					<Menu.Item index="5">
 						<NavLink to="/profile" className="nav-link">
 							<MdSettings size="1.4em" />
 							Profile

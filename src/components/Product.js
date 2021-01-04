@@ -132,67 +132,78 @@ export default function Product({ product }) {
 	}
 
 	return (
-		<div className="product-card">
-			<Card
-				bodyStyle={{
-					padding: 0,
-					display: "flex",
-					flexDirection: "column",
-				}}
-			>
-				<S3Image
-					onClick={showProductDetail}
-					imgKey={product.file.key}
-					theme={{
-						photoImg: {
-							width: "15em",
-							height: "20em",
-							objectFit: "cover",
-						},
+		<>
+			<div className="product-card">
+				<Card
+					bodyStyle={{
+						padding: 0,
+						display: "flex",
+						flexDirection: "column",
 					}}
-				/>
-				<div className="product-card-content" onClick={showProductDetail}>
-					<strong>{product.name}</strong>
-					{/* <div className="description">{product.description}</div> */}
-					<div className="shipped">
-						<i className="el-icon-message" />
-						{product.shipped ? "Deliver" : "Email"}
-						<div className="price">${convertCentsToDollars(product.price)}</div>
+				>
+					<S3Image
+						onClick={showProductDetail}
+						imgKey={product.file.key}
+						theme={{
+							photoImg: {
+								width: "15em",
+								height: "20em",
+								objectFit: "cover",
+							},
+						}}
+					/>
+					<div className="product-card-content" onClick={showProductDetail}>
+						<strong>{product.name}</strong>
+						{/* <div className="description">{product.description}</div> */}
+						<div className="shipped">
+							<i className="el-icon-message" />
+							{product.shipped ? "Deliver" : "Email"}
+							<div className="price">
+								${convertCentsToDollars(product.price)}
+							</div>
+						</div>
 					</div>
-				</div>
-			</Card>
+				</Card>
+			</div>
 
 			{/* dialog to see product detail */}
 			<Dialog
 				top="5%"
-				size="small"
+				size="large"
 				visible={shouldShowProductDetail}
 				onCancel={hideProductDetail}
 				lockScroll={false}
 				customClass="product-detail-dialog"
 			>
-				<Dialog.Body>
-					<S3Image
-						imgKey={product.file.key}
-						theme={{
-							photoImg: {
-								width: "100%",
-								// height: "20em",
-								objectFit: "cover",
-							},
-						}}
-					/>
+				<Dialog.Body className="product-detail-dialog-body">
+					<div className="image-wrapper">
+						<S3Image
+							imgKey={product.file.key}
+							theme={{
+								photoImg: {
+									// width: "100%",
+									// flexGrow: 1,
+									maxHeight: "40em",
+									width: "100%",
+									// maxWidth: "50%",
+									objectFit: "contain",
+								},
+							}}
+						/>
+					</div>
 					<div className="product-detail-content">
 						<span className="product-name">{product.name}</span>
-						<span className="product-price">{`$${convertCentsToDollars(
-							product.price
-						)}`}</span>
-					</div>
-					<span className="product-description">{product.description}</span>
-					<div className="shipped">
-						<i className="el-icon-message" />
-						Ship via:
-						{product.shipped ? "Deliver" : "Email"}
+						<div className="product-detail-seond-line">
+							<span className="product-price">{`$${convertCentsToDollars(
+								product.price
+							)}`}</span>
+							<div className="shipped">
+								<i className="el-icon-message" />
+								Ship via:
+								{product.shipped ? "Deliver" : "Email"}
+							</div>
+						</div>
+						<span className="product-description">{product.description}</span>
 					</div>
 				</Dialog.Body>
 				<Dialog.Footer>
@@ -212,7 +223,6 @@ export default function Product({ product }) {
 					)}
 				</Dialog.Footer>
 			</Dialog>
-
 			{/* dialog to edit product */}
 			<Dialog
 				title="Edit Product"
@@ -282,6 +292,6 @@ export default function Product({ product }) {
 					</Form>
 				</Dialog.Body>
 			</Dialog>
-		</div>
+		</>
 	);
 }

@@ -106,9 +106,9 @@ export default function MarketList(props) {
 		<div className="market-list">
 			{props.shouldShowAllMarkets ? (
 				<>
-					<h2>
+					{/* <h2>
 						<SiMarketo /> Markets
-					</h2>
+					</h2> */}
 					{renderMarketList(markets)}
 				</>
 			) : (

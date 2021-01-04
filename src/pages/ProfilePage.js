@@ -8,6 +8,7 @@ import {
 	displayTime,
 } from "../utils";
 import { S3Image } from "aws-amplify-react";
+import { SiMarketo } from "react-icons/si";
 
 const getUserQuery = /* GraphQL */ `
 	query GetUser($id: ID!) {
@@ -117,6 +118,24 @@ export default function ProfilePage({ cognitoUser }) {
 					/>
 				</Tabs.Pane>
 				<Tabs.Pane
+					label={
+						<>
+							<SiMarketo />
+							<span>My Markets</span>
+						</>
+					}
+					name="2"
+				></Tabs.Pane>
+				<Tabs.Pane
+					label={
+						<>
+							<i className="el-icon-menu" />
+							<span>My Products</span>
+						</>
+					}
+					name="3"
+				></Tabs.Pane>
+				<Tabs.Pane
 					className="orders"
 					label={
 						<>
@@ -124,7 +143,7 @@ export default function ProfilePage({ cognitoUser }) {
 							<span>Orders</span>
 						</>
 					}
-					name="2"
+					name="4"
 				>
 					{userInfo && userInfo.orders.items.length > 0 ? (
 						userInfo.orders.items
