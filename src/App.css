@@ -330,7 +330,8 @@ body {
 	justify-content: center !important;
 }
 
-.profile-page .el-tabs__item i {
+.profile-page .el-tabs__item i,
+.profile-page .el-tabs__item svg {
 	padding-right: 0.2em;
 }
 

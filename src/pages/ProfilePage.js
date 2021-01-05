@@ -96,7 +96,7 @@ export default function ProfilePage({ cognitoUser }) {
 					}
 					name="1"
 				>
-					<h3>PROFILE SUMMARY</h3>
+					<h3>ACCOUNT SUMMARY</h3>
 					<Table
 						className="user-profile-table"
 						stripe={true}
