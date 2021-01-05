@@ -8,8 +8,8 @@ import { Authenticator, Greetings } from "aws-amplify-react";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 import { Router, Route } from "react-router-dom";
 import "./App.css";
-import HomePage2 from "./pages/HomePage2";
-import HomePage from "./pages/HomePage";
+import ProductListPage from "./pages/ProductListPage";
+import MarketListPage from "./pages/MarketListPage";
 import ProfilePage from "./pages/ProfilePage";
 import MarketPage from "./pages/MarketPage";
 import Navbar from "./components/Navbar";
@@ -47,6 +47,8 @@ function App() {
 						data.payload.data.attributes.email,
 						data.payload.data.username
 					);
+					break;
+				default:
 					break;
 			}
 		});
@@ -94,8 +96,8 @@ function App() {
 			<Router history={browserHistory}>
 				<Navbar user={user} handleSignOut={handleSignOut} />
 				<div className="app-container">
-					<Route exact path="/markets" component={HomePage} />
-					<Route exact path="/" component={HomePage2} />
+					<Route exact path="/markets" component={MarketListPage} />
+					<Route exact path="/" component={ProductListPage} />
 					<Route path="/profile">
 						<ProfilePage cognitoUser={user} />
 					</Route>

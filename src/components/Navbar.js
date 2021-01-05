@@ -38,12 +38,12 @@ export default function Navbar({ user, handleSignOut }) {
 						</Menu.Item>
 					</Menu.SubMenu>
 					<span className="greeting"> </span>
-					<Menu.Item index="5">
-						<NavLink to="/profile" className="nav-link">
+					<NavLink to="/profile">
+						<Menu.Item index="5">
 							<MdSettings size="1.4em" />
-							Profile
-						</NavLink>
-					</Menu.Item>
+							<span>Profile</span>
+						</Menu.Item>
+					</NavLink>
 				</div>
 			</div>
 		</Menu>

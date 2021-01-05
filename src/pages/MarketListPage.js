@@ -4,7 +4,7 @@ import NewMarket from "../components/NewMarket";
 import { API, graphqlOperation } from "aws-amplify";
 import { searchMarkets } from "../graphql/queries";
 
-export default function HomePage() {
+export default function MarketListPage() {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [isSearchLoading, setIsSearchLoading] = useState(false);
 	const [searchResultList, setSearchResultList] = useState([]);
@@ -20,8 +20,8 @@ export default function HomePage() {
 				graphqlOperation(searchMarkets, {
 					filter: {
 						or: [
-							{ name: { match: searchTerm } },
-							{ tags: { match: searchTerm } },
+							{ name: { wildcard: `*${searchTerm}*` } },
+							{ tags: { wildcard: `*${searchTerm}*` } },
 						],
 					},
 				})

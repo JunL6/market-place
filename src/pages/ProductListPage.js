@@ -7,7 +7,7 @@ import { COMPARE_NOTES_CREATEDTIME_ASCENDING } from "../utils";
 import { Button } from "element-react";
 import ProductList from "../components/ProductList";
 
-export default function HomePage() {
+export default function ProductListPage() {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [isSearchLoading, setIsSearchLoading] = useState(false);
 	const [searchResultList, setSearchResultList] = useState([]);

@@ -178,10 +178,10 @@ export default function MarketPage({ user, marketId }) {
 		<div className="market-page">
 			{/* <IsLoadingContext.Provider value={{ setIsLoading }}> */}
 			<div className="back-nav-link">
-				<Link to="/">
+				<Link to="/markets">
 					<Button>
 						<i className="el-icon-arrow-left" />
-						<span>Back to Markets List</span>
+						<span>Back to Market List</span>
 					</Button>
 				</Link>
 			</div>
