@@ -59,11 +59,11 @@ export default function ProductListPage() {
 		setSearchResultList([]);
 	}
 
-	function renderProducts(products) {
-		return products.sort(COMPARE_NOTES_CREATEDTIME_ASCENDING).map((product) => {
-			return <Product key={product.id} product={product} />;
-		});
-	}
+	// function renderProducts(products) {
+	// 	return products.sort(COMPARE_NOTES_CREATEDTIME_ASCENDING).map((product) => {
+	// 		return <Product key={product.id} product={product} />;
+	// 	});
+	// }
 
 	return (
 		<div>

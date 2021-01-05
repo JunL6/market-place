@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Card, Loading, Table, Tabs } from "element-react";
+import { Loading, Table, Tabs } from "element-react";
 import { API, graphqlOperation } from "aws-amplify";
-import {
-	COMPARE_NOTES_CREATEDTIME_ASCENDING,
-	convertCentsToDollars,
-	displayDate,
-	displayTime,
-} from "../utils";
-import { S3Image } from "aws-amplify-react";
+import { COMPARE_NOTES_CREATEDTIME_ASCENDING } from "../utils";
 import { SiMarketo } from "react-icons/si";
+import OrderCard from "../components/OrderCard";
+import { listProducts } from "../graphql/queries";
+import ProductList from "../components/ProductList";
 
 const getUserQuery = /* GraphQL */ `
 	query GetUser($id: ID!) {
@@ -47,8 +44,26 @@ const getUserQuery = /* GraphQL */ `
 
 export default function ProfilePage({ cognitoUser }) {
 	const [userInfo, setUserInfo] = useState();
-
+	const [userProductList, setUserProductList] = useState();
 	console.log(cognitoUser);
+
+	/* columns for <Table /> */
+	const columns = [
+		{
+			prop: "name",
+			// width: 200,
+		},
+		{
+			prop: "value",
+			// width: 400,
+		},
+	];
+
+	/* Effect Hook */
+	useEffect(() => {
+		getUserInfo();
+		getUserProducts();
+	}, [cognitoUser]);
 
 	async function getUserInfo() {
 		if (cognitoUser && cognitoUser.attributes.sub) {
@@ -67,27 +82,31 @@ export default function ProfilePage({ cognitoUser }) {
 		}
 	}
 
-	useEffect(() => {
-		getUserInfo();
-	}, [cognitoUser]);
+	async function getUserProducts() {
+		if (cognitoUser && cognitoUser.attributes.sub) {
+			try {
+				const result = await API.graphql(
+					graphqlOperation(listProducts, {
+						filter: {
+							owner: {
+								eq: cognitoUser.attributes.sub,
+							},
+						},
+					})
+				);
 
-	/* columns for <Table /> */
-	const columns = [
-		{
-			prop: "name",
-			// width: 200,
-		},
-		{
-			prop: "value",
-			// width: 400,
-		},
-	];
+				setUserProductList(result.data.listProducts.items);
+			} catch (err) {
+				console.error(`Error fetching user's products`);
+			}
+		}
+	}
 
 	return (
 		<>
 			<Tabs type="card" className="profile-page">
 				<Tabs.Pane
-					className="summary"
+					className="summary tab"
 					label={
 						<>
 							<i className="el-icon-information"></i>
@@ -134,7 +153,13 @@ export default function ProfilePage({ cognitoUser }) {
 						</>
 					}
 					name="3"
-				></Tabs.Pane>
+				>
+					{userProductList ? (
+						<ProductList products={userProductList} />
+					) : (
+						<h3>Loading...</h3>
+					)}
+				</Tabs.Pane>
 				<Tabs.Pane
 					className="orders"
 					label={
@@ -148,47 +173,7 @@ export default function ProfilePage({ cognitoUser }) {
 					{userInfo && userInfo.orders.items.length > 0 ? (
 						userInfo.orders.items
 							.sort(COMPARE_NOTES_CREATEDTIME_ASCENDING)
-							.map((order) => (
-								<Card
-									className="order-card"
-									key={order.id}
-									bodyStyle={{ display: "flex", width: "40em" }}
-								>
-									<S3Image
-										className="product-image"
-										imgKey={order.product.file.key}
-										theme={{
-											photoImg: {
-												width: "8em",
-												height: "8em",
-												objectFit: "cover",
-												borderRadius: "8px",
-											},
-										}}
-									/>
-									<div className="order-content">
-										<div className="product-name">{order.product.name}</div>
-										<div>${convertCentsToDollars(order.product.price)}</div>
-										<div>
-											<small>{`${displayDate(
-												new Date(order.createdAt)
-											)} ${displayTime(new Date(order.createdAt))}`}</small>
-										</div>
-										<div>
-											Shipping:{" "}
-											{order.product.shipped
-												? // <div>
-												  // 	<i>{order.shippingAddress.address_line1}</i>
-												  // 	<div>
-												  // 		<i>{`${order.shippingAddress.city}, ${order.shippingAddress.address_state}, ${order.shippingAddress.country}, ${order.shippingAddress.address_zip}`}</i>
-												  // 	</div>
-												  // </div>
-												  `Delivery`
-												: `Via Email`}
-										</div>
-									</div>
-								</Card>
-							))
+							.map((order) => <OrderCard key={order.id} order={order} />)
 					) : (
 						<h3>You haven't placed any order yet.</h3>
 					)}

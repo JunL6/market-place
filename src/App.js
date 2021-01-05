@@ -38,7 +38,6 @@ function App() {
 			feat: when the user signs in, check if the user email has registered for 'User' table. If not: register. 
 		*/
 		Hub.listen("auth", (data) => {
-			// console.log(data);
 			console.log(data);
 			switch (data.payload.event) {
 				case "signIn":

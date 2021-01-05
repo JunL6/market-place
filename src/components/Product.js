@@ -146,9 +146,13 @@ export default function Product({ product }) {
 						imgKey={product.file.key}
 						theme={{
 							photoImg: {
-								width: "15em",
-								height: "20em",
+								width: "18vw",
+								height: "24vw",
 								objectFit: "cover",
+								minWidth: "12em",
+								minHeight: "18em",
+								maxWidth: "18em",
+								maxHeight: "24em",
 							},
 						}}
 					/>
