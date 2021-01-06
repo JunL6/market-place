@@ -1,4 +1,15 @@
-type Market @model @searchable {
+type Market
+	@model
+	@searchable
+	@auth(
+		rules: [
+			{
+				allow: owner
+				identityField: "sub"
+				operations: [create, delete, update]
+			}
+		]
+	) {
 	id: ID!
 	name: String!
 	tags: [String]

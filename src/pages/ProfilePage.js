@@ -6,6 +6,7 @@ import { SiMarketo } from "react-icons/si";
 import OrderCard from "../components/OrderCard";
 import { listProducts } from "../graphql/queries";
 import ProductList from "../components/ProductList";
+import MarketList from "../components/MarketList";
 
 const getUserQuery = /* GraphQL */ `
 	query GetUser($id: ID!) {
@@ -42,8 +43,35 @@ const getUserQuery = /* GraphQL */ `
 	}
 `;
 
+/* the query provided by codegen does not query products item  */
+const listMarkets = /* GraphQL */ `
+	query ListMarkets(
+		$filter: ModelMarketFilterInput
+		$limit: Int
+		$nextToken: String
+	) {
+		listMarkets(filter: $filter, limit: $limit, nextToken: $nextToken) {
+			items {
+				id
+				name
+				tags
+				owner
+				createdAt
+				products {
+					items {
+						name
+					}
+				}
+				updatedAt
+			}
+			nextToken
+		}
+	}
+`;
+
 export default function ProfilePage({ cognitoUser }) {
 	const [userInfo, setUserInfo] = useState();
+	const [userMarketList, setUserMarketList] = useState();
 	const [userProductList, setUserProductList] = useState();
 	console.log(cognitoUser);
 
@@ -63,6 +91,7 @@ export default function ProfilePage({ cognitoUser }) {
 	useEffect(() => {
 		getUserInfo();
 		getUserProducts();
+		getUserMarkets();
 	}, [cognitoUser]);
 
 	async function getUserInfo() {
@@ -102,8 +131,33 @@ export default function ProfilePage({ cognitoUser }) {
 		}
 	}
 
+	async function getUserMarkets() {
+		if (cognitoUser && cognitoUser.attributes.sub) {
+			try {
+				const result = await API.graphql(
+					graphqlOperation(listMarkets, {
+						filter: {
+							owner: {
+								eq: cognitoUser.attributes.sub,
+							},
+						},
+					})
+				);
+
+				setUserMarketList(
+					result.data.listMarkets.items.sort(
+						COMPARE_NOTES_CREATEDTIME_ASCENDING
+					)
+				);
+			} catch (err) {
+				console.error(`Error fetching user's markets`);
+			}
+		}
+	}
+
 	return (
 		<>
+			{console.log(userMarketList)}
 			<Tabs type="card" className="profile-page">
 				<Tabs.Pane
 					className="summary tab"
@@ -144,7 +198,13 @@ export default function ProfilePage({ cognitoUser }) {
 						</>
 					}
 					name="2"
-				></Tabs.Pane>
+				>
+					{userMarketList ? (
+						<MarketList markets={userMarketList} />
+					) : (
+						<h3>Loading...</h3>
+					)}
+				</Tabs.Pane>
 				<Tabs.Pane
 					label={
 						<>

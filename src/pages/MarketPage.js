@@ -195,10 +195,10 @@ export default function MarketPage({ user, marketId }) {
 			<Tabs
 				className="market-page-tabs"
 				type="border-card"
-				value={market.owner === user.username ? "1" : "2"}
+				value={market.owner === user.attributes.sub ? "1" : "2"}
 			>
 				<Tabs.Pane
-					disabled={user.username !== market.owner}
+					disabled={user.attributes.sub !== market.owner}
 					label={
 						<span>
 							<Icon name="plus" className="label-icon" />

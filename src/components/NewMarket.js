@@ -28,11 +28,11 @@ export default function NewMarket(props) {
 	/* graphql operation for creating market */
 	async function handleCreateMarket(event) {
 		event.preventDefault();
-		console.log(user.user.username);
-		const { username } = user.user;
+		console.log(user);
+		const userId = user.user.attributes.sub;
 		let mutationInput = {
 			name: marketName,
-			owner: username,
+			owner: userId,
 			tags: tagsSelected,
 		};
 		try {
