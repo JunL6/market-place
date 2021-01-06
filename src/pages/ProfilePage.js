@@ -198,12 +198,20 @@ export default function ProfilePage({ cognitoUser }) {
 						</>
 					}
 					name="2"
+					className="markets-tab"
 				>
-					{userMarketList ? (
+					<Loading text="Loading..." loading={!userMarketList}>
+						{userMarketList && userMarketList.length > 0 ? (
+							<MarketList markets={userMarketList} />
+						) : (
+							<h3>You haven't created any market yet.</h3>
+						)}
+					</Loading>
+					{/* {userMarketList ? (
 						<MarketList markets={userMarketList} />
 					) : (
 						<h3>Loading...</h3>
-					)}
+					)} */}
 				</Tabs.Pane>
 				<Tabs.Pane
 					label={
@@ -213,12 +221,15 @@ export default function ProfilePage({ cognitoUser }) {
 						</>
 					}
 					name="3"
+					className="products-tab"
 				>
-					{userProductList ? (
-						<ProductList products={userProductList} />
-					) : (
-						<h3>Loading...</h3>
-					)}
+					<Loading text="Loading..." loading={!userProductList}>
+						{userProductList && userProductList.length > 0 ? (
+							<ProductList products={userProductList} />
+						) : (
+							<h3>You haven't post any product yet.</h3>
+						)}
+					</Loading>
 				</Tabs.Pane>
 				<Tabs.Pane
 					className="orders"

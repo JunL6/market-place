@@ -82,6 +82,12 @@ body {
 	text-decoration: none;
 }
 
+.nav-container .markets,
+.nav-container .products {
+	font-size: 1.2em;
+	font-weight: 600;
+}
+
 /* NewMarket.js */
 .market-header {
 	display: flex;
@@ -352,6 +358,14 @@ body {
 
 .profile-page .user-profile-table {
 	max-width: 48em;
+}
+
+.profile-page .markets-tab h3 {
+	text-align: center;
+}
+
+.profile-page .products-tab h3 {
+	text-align: center;
 }
 
 .profile-page .orders h3 {

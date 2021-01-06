@@ -216,7 +216,10 @@ export default function Product({ product }) {
 							<Button
 								type="info"
 								icon="edit"
-								onClick={() => setIsDialogOpen(true)}
+								onClick={() => {
+									hideProductDetail();
+									setIsDialogOpen(true);
+								}}
 							/>
 							<Button type="danger" icon="delete" onClick={handleDelete} />
 						</div>

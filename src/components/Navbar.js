@@ -17,12 +17,12 @@ export default function Navbar({ user, handleSignOut }) {
 					</Menu.Item>
 					<NavLink to="/markets">
 						<Menu.Item index="2">
-							<span>Markets</span>
+							<span className="markets">Markets</span>
 						</Menu.Item>
 					</NavLink>
 					<NavLink to="/">
 						<Menu.Item index="3">
-							<span>Products</span>
+							<span className="products">Products</span>
 						</Menu.Item>
 					</NavLink>
 				</div>

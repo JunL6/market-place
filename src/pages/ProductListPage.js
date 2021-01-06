@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import { searchProducts, listProducts } from "../graphql/queries";
 import ProductSearchInput from "../components/ProductSearchInput";
-import Product from "../components/Product";
 import { COMPARE_NOTES_CREATEDTIME_ASCENDING } from "../utils";
 import { Button } from "element-react";
 import ProductList from "../components/ProductList";
+import { onUpdateProduct } from "../graphql/subscriptions";
 
 export default function ProductListPage() {
 	const [searchTerm, setSearchTerm] = useState("");
@@ -21,6 +21,37 @@ export default function ProductListPage() {
 		fetchAllProducts();
 	}, []);
 
+	/* Effect hook: onProductUpdate subscriber */
+	useEffect(() => {
+		const onProductUpdateListener = API.graphql(
+			graphqlOperation(onUpdateProduct)
+		).subscribe({
+			next: ({ provider, value }) => {
+				const updatedProduct = value.data.onUpdateProduct;
+				// console.log(allProductList.filter((product) => product.id !== 1));
+				// const updatedList = [
+				// 	updatedProduct,
+				// 	...allProductList.filter(
+				// 		(product) => product.id !== updatedProduct.id
+				// 	),
+				// ];
+				setAllProductList((prevList) => {
+					const updatedList = [
+						updatedProduct,
+						...prevList.filter((product) => product.id !== updatedProduct.id),
+					];
+					console.log(updatedList);
+					return updatedList.sort(COMPARE_NOTES_CREATEDTIME_ASCENDING);
+				});
+			},
+		});
+
+		return function cleanup() {
+			onProductUpdateListener.unsubscribe();
+		};
+	}, []);
+
+	/* graphql operation for fetching all the products */
 	async function fetchAllProducts() {
 		try {
 			const result = await API.graphql(graphqlOperation(listProducts));
@@ -30,7 +61,7 @@ export default function ProductListPage() {
 		}
 	}
 
-	/* graphql operation for searching market by name or tags */
+	/* graphql operation for searching product by name */
 	async function handleSearchSubmit(event) {
 		event.preventDefault();
 		setIsSearchLoading(true);
@@ -59,14 +90,9 @@ export default function ProductListPage() {
 		setSearchResultList([]);
 	}
 
-	// function renderProducts(products) {
-	// 	return products.sort(COMPARE_NOTES_CREATEDTIME_ASCENDING).map((product) => {
-	// 		return <Product key={product.id} product={product} />;
-	// 	});
-	// }
-
 	return (
 		<div>
+			{/* {console.log(allProductList.filter((product) => product.id !== 1))} */}
 			<ProductSearchInput
 				searchTerm={searchTerm}
 				setSearchTerm={setSearchTerm}
