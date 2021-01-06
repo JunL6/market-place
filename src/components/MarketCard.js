@@ -1,6 +1,7 @@
 import { Card, Tag } from "element-react";
 import React from "react";
 import { Link } from "react-router-dom";
+import { browserHistory } from "../App";
 
 const cardBodyStyle = {
 	display: "flex",
@@ -11,15 +12,17 @@ const cardBodyStyle = {
 
 export default function MarketCard({ market }) {
 	return (
-		<div className="market-list-item">
+		<div
+			className="market-list-item"
+			onClick={() => {
+				browserHistory.push(`/markets/${market.id}`);
+				console.log("clicked");
+			}}
+		>
+			{/* <Link to={`/markets/${market.id}`}> */}
 			<Card bodyStyle={cardBodyStyle}>
 				<div className="market-list-item-left">
-					<Link
-						to={`/markets/${market.id}`}
-						className="market-list-item-marketname"
-					>
-						<span>{market.name}</span>
-					</Link>
+					<span className="market-list-item-marketname">{market.name}</span>
 					<span className="market-list-item-product">
 						{`${market.products.items.length} products`}
 					</span>
@@ -33,6 +36,7 @@ export default function MarketCard({ market }) {
 						))}
 				</div>
 			</Card>
+			{/* </Link> */}
 		</div>
 	);
 }

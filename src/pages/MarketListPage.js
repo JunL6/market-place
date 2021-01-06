@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import MarketList from "../components/MarketList";
 import NewMarket from "../components/NewMarket";
 import { API, graphqlOperation } from "aws-amplify";
-import { Button } from "element-react";
+import { Button, Notification } from "element-react";
 import { COMPARE_NOTES_CREATEDTIME_ASCENDING } from "../utils";
+import { onCreateMarket } from "../graphql/subscriptions";
 
 /* the query provided by codegen does not query products item */
 const listMarkets = /* GraphQL */ `
@@ -78,7 +79,35 @@ export default function MarketListPage() {
 		fetchAllMarkets();
 	}, []);
 
-	/* graphql operatino for getting list of markets for the current user */
+	/* graphql subscription for onCreateMarket */
+	useEffect(() => {
+		try {
+			const createMarketSubscription = API.graphql(
+				graphqlOperation(onCreateMarket)
+			).subscribe({
+				next: (marketData) => {
+					const newMarket = marketData.value.data.onCreateMarket;
+					setAllMarketList((prevMarkets) => {
+						return [...prevMarkets, newMarket].sort(
+							COMPARE_NOTES_CREATEDTIME_ASCENDING
+						);
+					});
+					Notification.success({
+						title: "Success!",
+						message: "Added new market",
+					});
+				},
+			});
+
+			return function cleanup() {
+				createMarketSubscription.unsubscribe();
+			};
+		} catch (err) {
+			console.error(`Error subscribing to onCreateMarket`, err);
+		}
+	}, []);
+
+	/* graphql operation for getting list of markets for the current user */
 	async function fetchAllMarkets() {
 		try {
 			const result = await API.graphql({ query: listMarkets });
@@ -135,7 +164,8 @@ export default function MarketListPage() {
 				handleSearchSubmit={handleSearchSubmit}
 				isSearchLoading={isSearchLoading}
 			/>
-			{console.log(allMarketList)}
+			{allMarketList &&
+				allMarketList.map((market) => console.log(market.id, market.name))}
 			{shouldShowAllMarkets ? (
 				<MarketList markets={allMarketList} />
 			) : (
