@@ -170,7 +170,7 @@ export default function MarketListPage() {
 				<MarketList markets={allMarketList} />
 			) : (
 				<div>
-					<h2>
+					<h2 className="search-result-hint">
 						<Button icon="arrow-left" onClick={showAllMarkets} />
 						<span className="search-result-text">
 							{`showing search results for "${currentSearchTerm}": ${searchResultList.length} matching`}

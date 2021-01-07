@@ -28,19 +28,12 @@ export default function ProductListPage() {
 		).subscribe({
 			next: ({ provider, value }) => {
 				const updatedProduct = value.data.onUpdateProduct;
-				// console.log(allProductList.filter((product) => product.id !== 1));
-				// const updatedList = [
-				// 	updatedProduct,
-				// 	...allProductList.filter(
-				// 		(product) => product.id !== updatedProduct.id
-				// 	),
-				// ];
+
 				setAllProductList((prevList) => {
 					const updatedList = [
 						updatedProduct,
 						...prevList.filter((product) => product.id !== updatedProduct.id),
 					];
-					console.log(updatedList);
 					return updatedList.sort(COMPARE_NOTES_CREATEDTIME_ASCENDING);
 				});
 			},
@@ -74,7 +67,6 @@ export default function ProductListPage() {
 				})
 			);
 
-			console.log(searchResult);
 			setSearchResultList(searchResult.data.searchProducts.items);
 			setCurrentSearchTerm(searchTerm);
 			setSearchTerm("");
@@ -92,7 +84,6 @@ export default function ProductListPage() {
 
 	return (
 		<div>
-			{/* {console.log(allProductList.filter((product) => product.id !== 1))} */}
 			<ProductSearchInput
 				searchTerm={searchTerm}
 				setSearchTerm={setSearchTerm}

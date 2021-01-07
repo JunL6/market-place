@@ -149,7 +149,7 @@ export default function Product({ product }) {
 								width: "18vw",
 								height: "24vw",
 								objectFit: "cover",
-								minWidth: "12em",
+								minWidth: "14em",
 								minHeight: "18em",
 								maxWidth: "18em",
 								maxHeight: "24em",

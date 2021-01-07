@@ -154,7 +154,11 @@ body {
 	margin-left: 0.5em;
 }
 
-.search-result-text {
+.search-result-hint {
+	margin: 0 2.6em;
+}
+
+.search-result-hint .search-result-text {
 	padding: 0 12px;
 }
 
