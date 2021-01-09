@@ -2,8 +2,9 @@
 	--form-color: cyan !important;
 	--amplify-background-color: #f7faff;
 	background-color: aliceblue;
-}
+} */
 
+/*
 amplify-authenticator {
 	background-color: black !important;
 }
@@ -11,6 +12,55 @@ amplify-authenticator {
 :host {
 	--background-color: black !important;
 	--amplify-background-color: black;
+}
+*/
+
+/* Authenticator */
+/* .authenticator {
+}
+
+.auth-container {
+} */
+
+.auth-wrapper .bg {
+	opacity: 1;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background-image: url("./background.jpeg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	filter: blur(36px);
+	z-index: -1;
+}
+
+.app-wrapper .bg {
+	opacity: 0.1;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background-image: url("./background.jpeg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	filter: blur(36px);
+	z-index: -1;
+}
+
+:host-context(.auth-wrapper) .auth-container {
+	color: blue;
+}
+
+/* amplify-authenticator {
+	background-image: url("./background.jpeg");
+	padding: 100px;
+} */
+
+/* :host .auth-container {
+	background-color: black;
+} */
+
+/* :host-context(.authenticator) .auth-container {
+	background-color: black;
 } */
 
 /* App.js */
@@ -27,6 +77,7 @@ body {
 /* Navbar.js */
 .nav-container {
 	display: flex;
+	background-color: #29528c;
 }
 
 @media (max-width: 520px) {

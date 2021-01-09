@@ -4,6 +4,7 @@ import {
 	AmplifyGreetings,
 	AmplifyAuthenticator,
 } from "@aws-amplify/ui-react";
+
 import { Authenticator, Greetings } from "aws-amplify-react";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 import { Router, Route } from "react-router-dom";
@@ -23,6 +24,15 @@ import { createBrowserHistory } from "history";
 export const UserContext = React.createContext();
 
 export const browserHistory = createBrowserHistory();
+
+const myTheme = {
+	container: {
+		backgroundColor: "black",
+	},
+	signInButton: {
+		backgroundColor: "blue",
+	},
+};
 
 function App() {
 	const [authState, setAuthState] = useState();
@@ -91,26 +101,33 @@ function App() {
 	}
 
 	return authState === AuthState.SignedIn && user ? (
-		<UserContext.Provider value={{ user }}>
-			<Router history={browserHistory}>
-				<Navbar user={user} handleSignOut={handleSignOut} />
-				<div className="app-container">
-					<Route exact path="/markets" component={MarketListPage} />
-					<Route exact path="/" component={ProductListPage} />
-					<Route path="/profile">
-						<ProfilePage cognitoUser={user} />
-					</Route>
-					<Route
-						path="/markets/:marketId"
-						component={({ match }) => (
-							<MarketPage marketId={match.params.marketId} user={user} />
-						)}
-					/>
-				</div>
-			</Router>
-		</UserContext.Provider>
+		<div className="app-wrapper">
+			<div className="bg" />
+			<UserContext.Provider value={{ user }}>
+				<Router history={browserHistory}>
+					<Navbar user={user} handleSignOut={handleSignOut} />
+					<div className="app-container">
+						<Route exact path="/markets" component={MarketListPage} />
+						<Route exact path="/" component={ProductListPage} />
+						<Route path="/profile">
+							<ProfilePage cognitoUser={user} />
+						</Route>
+						<Route
+							path="/markets/:marketId"
+							component={({ match }) => (
+								<MarketPage marketId={match.params.marketId} user={user} />
+							)}
+						/>
+					</div>
+				</Router>
+			</UserContext.Provider>
+		</div>
 	) : (
-		<AmplifyAuthenticator />
+		<div className="auth-wrapper">
+			{/* <Authenticator theme={myTheme} /> */}
+			<div className="bg" />
+			<AmplifyAuthenticator />
+		</div>
 		// <Authenticator />
 	);
 }
