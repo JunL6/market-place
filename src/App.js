@@ -75,7 +75,7 @@ function App() {
 					})
 				);
 
-				console.log(result.data);
+				// console.log(result.data);
 			} else console.log(`${username} has already registered.`);
 		} catch (err) {
 			console.log(err);
