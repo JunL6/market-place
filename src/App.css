@@ -215,7 +215,9 @@ body {
 
 /* MarketPage.js */
 .back-nav-link {
+	display: inline-block;
 	margin-bottom: 0.6em;
+	margin-right: 0.6em;
 }
 
 .market-name {
@@ -223,6 +225,7 @@ body {
 }
 
 .market-name strong {
+	color: #3f4d5e;
 	font-size: 1.4em;
 	margin-right: 0.2em;
 }

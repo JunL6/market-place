@@ -49,6 +49,7 @@ const getMarket = /* GraphQL */ `
 export default function MarketPage({ user, marketId }) {
 	const [market, setMarket] = useState();
 	const [isLoading, setIsLoading] = useState(true);
+	const [tabValue, setTabValue] = useState("1");
 	/* subscription on product changes:
 	WayOfImplement 1: updating the ~products~ property of the  ~market~ variable
 	WOI2: declare a new state ~products~ and update it
@@ -57,9 +58,17 @@ export default function MarketPage({ user, marketId }) {
 	*/
 	// const [products, setProducts] = useState();
 
+	console.log(market, user);
+	console.log(market && market.owner === user.attributes.sub);
 	useEffect(() => {
 		fetchMarket();
 	}, []);
+
+	// useEffect(() => {
+	// 	setTabValue((prevValue) =>
+	// 		market && market.owner === user.attributes.sub ? "1" : "2"
+	// 	);
+	// }, [market]);
 
 	async function fetchMarket() {
 		try {
@@ -68,7 +77,7 @@ export default function MarketPage({ user, marketId }) {
 					id: marketId,
 				})
 			);
-			console.log(fetchResult);
+			// console.log(fetchResult);
 			setMarket(fetchResult.data.getMarket);
 			setIsLoading(false);
 		} catch (err) {
@@ -177,15 +186,16 @@ export default function MarketPage({ user, marketId }) {
 	) : (
 		<div className="market-page">
 			{/* <IsLoadingContext.Provider value={{ setIsLoading }}> */}
-			<div className="back-nav-link">
-				<Link to="/markets">
-					<Button>
-						<i className="el-icon-arrow-left" />
-						<span>Back to Market List</span>
-					</Button>
-				</Link>
-			</div>
+
 			<div className="market-name">
+				<div className="back-nav-link">
+					<Link to="/markets">
+						<Button>
+							<i className="el-icon-arrow-left" />
+							<span>Back to Market List</span>
+						</Button>
+					</Link>
+				</div>
 				<strong>{market.name}</strong> <span>{`By ${market.owner}`}</span>
 			</div>
 			<div>
