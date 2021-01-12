@@ -1,6 +1,6 @@
 import { API, graphqlOperation } from "aws-amplify";
-import { Message, Notification } from "element-react";
-import React, { useContext } from "react";
+import { Loading, Message, Notification } from "element-react";
+import React, { useState } from "react";
 import StripeCheckout from "react-stripe-checkout";
 import { createOrder } from "../graphql/mutations";
 // import { IsLoadingContext } from "../pages/MarketPage";
@@ -31,6 +31,7 @@ export default function PayButton({ product, user }) {
 		const productOwnerEmail = await getProductOwner();
 		console.log(productOwnerEmail);
 		console.log(token);
+		// setIsProcessingPayment(true);
 		try {
 			const result = await API.post("orderprocessor", "/charge", {
 				body: {
@@ -69,7 +70,7 @@ export default function PayButton({ product, user }) {
 				);
 
 				console.log(createOrderResult);
-
+				// setIsProcessingPayment(false);
 				Notification.success({
 					title: "Success",
 					message: "Purchase Success!",
@@ -103,6 +104,11 @@ export default function PayButton({ product, user }) {
 	}
 
 	return (
+		// <Loading
+		// 	loading={false}
+		// 	fullscreen={true}
+		// 	text="Processing your payment..."
+		// >
 		<StripeCheckout
 			token={handleToken}
 			name={product.description}

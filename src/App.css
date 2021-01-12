@@ -35,7 +35,7 @@ amplify-authenticator {
 }
 
 .app-wrapper .bg {
-	opacity: 0.1;
+	opacity: 0.2;
 	width: 100%;
 	height: 100%;
 	position: absolute;
@@ -127,6 +127,7 @@ body {
 	border: none !important;
 	font-size: 2em;
 	padding: 0 0.2em;
+	font-family: Verdana;
 }
 
 .nav-link {
@@ -173,11 +174,13 @@ body {
 
 /* MarketList.js */
 .market-list {
-	margin: 1em 4em;
+	/* margin: 1em 4em; */
 }
 
 .market-list-item {
-	margin-bottom: 0.4em;
+	margin: 0 auto 0.4em auto;
+	max-width: 56em;
+	/* min-width: 32em; */
 }
 
 .market-list-item:hover {
@@ -451,4 +454,31 @@ body {
 
 .profile-page .order-card .product-image {
 	margin-right: 1em;
+}
+
+/* body,
+html,
+div {
+	height: 100%;
+} */
+
+/* .landing-page-bg {
+	background-image: url("./landing-page-bg.png");
+	height: 100%;
+	width: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+} */
+
+.landing-page-bg {
+	width: 100%;
+	height: auto;
+	object-fit: cover;
+	min-height: 100%;
+	min-width: 1024px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: -99;
 }

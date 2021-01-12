@@ -8,6 +8,7 @@ import {
 	Radio,
 	Notification,
 	MessageBox,
+	Loading,
 } from "element-react";
 import React, { useContext, useState } from "react";
 import PayButton from "./PayButton";
@@ -28,6 +29,7 @@ export default function Product({ product }) {
 	const [isShipped, setIsShipped] = useState(product.shipped);
 	const [isUpdating, setIsUpdating] = useState(false);
 	const [shouldShowProductDetail, setShouldShowProductDetail] = useState(false);
+	// const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
 	function handleProductNameChange(value) {
 		setProductName(value);
@@ -157,7 +159,9 @@ export default function Product({ product }) {
 						}}
 					/>
 					<div className="product-card-content" onClick={showProductDetail}>
-						<strong>{product.name}</strong>
+						<div className="product-name">
+							<strong>{product.name}</strong>
+						</div>
 						{/* <div className="description">{product.description}</div> */}
 						<div className="shipped">
 							<i className="el-icon-message" />
@@ -225,7 +229,11 @@ export default function Product({ product }) {
 						</div>
 					) : (
 						<div className="pay-button">
-							<PayButton product={product} user={user} />
+							<PayButton
+								product={product}
+								user={user}
+								// setIsProcessingPayment={setIsProcessingPayment}
+							/>
 						</div>
 					)}
 				</Dialog.Footer>

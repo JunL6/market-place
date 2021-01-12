@@ -20,6 +20,7 @@ import "@aws-amplify/ui/dist/style.css";
 import { registerUser } from "./graphql/mutations";
 import { getUser } from "./graphql/queries";
 import { createBrowserHistory } from "history";
+import LandingPage from "./pages/LandingPage";
 
 export const UserContext = React.createContext();
 
@@ -112,6 +113,7 @@ function App() {
 						<Route path="/profile">
 							<ProfilePage cognitoUser={user} />
 						</Route>
+
 						<Route
 							path="/markets/:marketId"
 							component={({ match }) => (
@@ -123,12 +125,11 @@ function App() {
 			</UserContext.Provider>
 		</div>
 	) : (
-		<div className="auth-wrapper">
-			{/* <Authenticator theme={myTheme} /> */}
-			<div className="bg" />
-			<AmplifyAuthenticator />
-		</div>
-		// <Authenticator />
+		<LandingPage />
+		// <div className="auth-wrapper">
+		// 	<div className="bg" />
+		// 	<AmplifyAuthenticator />
+		// </div>
 	);
 }
 
