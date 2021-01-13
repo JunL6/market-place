@@ -196,7 +196,8 @@ export default function MarketPage({ user, marketId }) {
 						</Button>
 					</Link>
 				</div>
-				<strong>{market.name}</strong> <span>{`By ${market.owner}`}</span>
+				<strong>{market.name}</strong>
+				{/* <span>{`By ${market.owner}`}</span> */}
 			</div>
 			<div>
 				<i className="el-icon-date" />{" "}

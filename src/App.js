@@ -38,8 +38,21 @@ const myTheme = {
 function App() {
 	const [authState, setAuthState] = useState();
 	const [user, setUser] = useState();
+	const [isLandingPage, setIsLandingPage] = useState(true);
+	const [currentAuthUser, setCurrentAuthUser] = useState();
 
 	useEffect(() => {
+		/* get currentAuthUser to determine if we should show the landing page or straight into the app */
+		Auth.currentAuthenticatedUser()
+			.then((data) => {
+				console.log(data);
+				setCurrentAuthUser(data.username);
+			})
+			.catch((err) => {
+				console.log("unauthed");
+				setCurrentAuthUser(undefined);
+			});
+
 		onAuthUIStateChange((nextAuthState, authData) => {
 			setAuthState(nextAuthState);
 			setUser(authData);
@@ -101,6 +114,7 @@ function App() {
 		}
 	}
 
+	console.log(authState === AuthState.SignedIn && user);
 	return authState === AuthState.SignedIn && user ? (
 		<div className="app-wrapper">
 			<div className="bg" />
@@ -124,13 +138,16 @@ function App() {
 				</Router>
 			</UserContext.Provider>
 		</div>
+	) : isLandingPage ? (
+		<LandingPage setIsLandingPage={setIsLandingPage} />
 	) : (
-		<LandingPage />
-		// <div className="auth-wrapper">
-		// 	<div className="bg" />
-		// 	<AmplifyAuthenticator />
-		// </div>
+		<AmplifyAuthenticator />
 	);
+	// <AmplifyAuthenticator />
+	// <div className="auth-wrapper">
+	// 	<div className="bg" />
+	// 	<AmplifyAuthenticator />
+	// </div>
 }
 
 // export default withAuthenticator(App);

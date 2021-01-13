@@ -212,7 +212,7 @@ body {
 	margin: 0 2.6em;
 }
 
-.search-result-hint .search-result-text {
+.search-result-text {
 	padding: 0 12px;
 }
 
@@ -456,29 +456,57 @@ body {
 	margin-right: 1em;
 }
 
-/* body,
-html,
-div {
-	height: 100%;
-} */
+/* LandingPage.js */
 
-/* .landing-page-bg {
-	background-image: url("./landing-page-bg.png");
-	height: 100%;
-	width: 100%;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
-} */
-
-.landing-page-bg {
+.landing-page .landing-page-bg {
 	width: 100%;
 	height: auto;
-	object-fit: cover;
+	object-fit: fill;
 	min-height: 100%;
 	min-width: 1024px;
 	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: -99;
+}
+
+.landing-page .logo {
+	margin: 2em;
+}
+
+.landing-page .content-wrapper {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.landing-page .content-wrapper .content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-right: 4em;
+	margin-left: 2em;
+}
+
+@media (max-width: 768px) {
+	.landing-page .content-wrapper .content {
+		margin-right: 2em;
+	}
+}
+
+.landing-page .content-wrapper .content h2 {
+	color: orange;
+	font-size: 3em;
+	margin-bottom: 0.2em;
+}
+
+.landing-page .content-wrapper .content p {
+	max-width: 20em;
+	color: orange;
+}
+
+.landing-page .signup-btn {
+	background-color: orange;
+	border: none;
+	color: white;
+	font-size: 1.2em;
 }
