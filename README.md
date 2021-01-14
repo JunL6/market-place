@@ -15,5 +15,5 @@ Deployed on AWS cloudfront: https://d24t6aoqzf5gkl.cloudfront.net/
 - Stripe for payment testing
 
 (back-end)
-- Node.js for lambda function (serverless)
+- Node.js for lambda function (serverless function for processing Stripe payment)
 - S3 for image storage
