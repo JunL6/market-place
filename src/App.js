@@ -141,7 +141,10 @@ function App() {
 	) : isLandingPage ? (
 		<LandingPage setIsLandingPage={setIsLandingPage} />
 	) : (
-		<AmplifyAuthenticator />
+		<div className="auth-wrapper">
+			<div className="bg" />
+			<AmplifyAuthenticator />
+		</div>
 	);
 	// <AmplifyAuthenticator />
 	// <div className="auth-wrapper">
