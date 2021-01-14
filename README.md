@@ -2,10 +2,11 @@ MarketPlace app with React and AWS Amplify.
 
 Deployed on AWS cloudfront: https://d24t6aoqzf5gkl.cloudfront.net/
 (If you don't want to sign up for an account, here is an account for testing: 
-  username: test1
-  password: testtest)
+  username: **test1**
+  password: **testtest**)
+  
 
-Tech used:
+###Tech used:
 
 (front-end)
 - React
