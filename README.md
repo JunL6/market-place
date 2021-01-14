@@ -6,6 +6,7 @@ Deployed on AWS cloudfront: https://d24t6aoqzf5gkl.cloudfront.net/
   password: testtest)
 
 Tech used:
+
 (front-end)
 - React
 - GraghQL
