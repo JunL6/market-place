@@ -7,13 +7,13 @@ Deployed on AWS cloudfront: https://d24t6aoqzf5gkl.cloudfront.net/
   
 ---
 ### Features:
-:Authentication with AWS Amplify
-:Create market with tags
-:Add, edit, delete products to market
-:view all the markets and products
-:search for markets and products by name or tag
-:purchase product with Stripe (Stripe test feature), and get email notification(AWS SES did not approve my project, so it's only available for verified emails for now)
-:view orders
+- Authentication with AWS Amplify
+- Create market with tags
+- Add, edit, delete products to market
+- view all the markets and products
+- search for markets and products by name or tag
+- purchase product with Stripe (Stripe test feature), and get email notification(AWS SES did not approve my project, so it's only available for verified emails for now)
+- view orders
 
 ---
 ### Tech used:
